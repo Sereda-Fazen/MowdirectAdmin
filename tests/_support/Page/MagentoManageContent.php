@@ -57,8 +57,11 @@ class MagentoManageContent
         $this->tester = $I; // подкл. конструктора
     }
 
+    public static $URL = '/admin';
+
     public function goToManagePage() {
         $I = $this->tester;
+        $I->amOnPage(self::$URL);
         $I ->moveMouseOver(self::$cmsDropDown);
         $I->waitForElement(self::$pagesDropDown);
         $I->moveMouseOver(self::$pagesDropDown);

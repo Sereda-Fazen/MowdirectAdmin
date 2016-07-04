@@ -11,6 +11,9 @@ namespace Page;
 
 class MagentoManageHierarchy
 {
+
+    public static $URL = '/admin';
+
     public static $cmsDropDown = '//*[@class="nav-bar"]/ul/li[8]';
     public static $pagesDropDown = '//*[@class="nav-bar"]/ul/li[8]/ul/li[1]/a/span';
     public static $manageHierarchy = '//*[@class="nav-bar"]/ul/li[8]/ul/li[1]/ul/li[2]/a/span';
@@ -56,7 +59,8 @@ class MagentoManageHierarchy
 
     public function goToManageHierarchyPage() {
         $I = $this->tester;
-        $I->moveMouseOver(self::$cmsDropDown);
+        $I->amOnPage(self::$URL);
+        $I ->moveMouseOver(self::$cmsDropDown);
         $I->waitForElement(self::$pagesDropDown);
         $I->moveMouseOver(self::$pagesDropDown);
         $I->waitForElement(self::$manageHierarchy);

@@ -132,8 +132,6 @@ class MagentoManageCategories
         $I->waitForElementNotVisible(self::$loading,30);
         $I->waitForElement(self::$assertSuccessMsg);
         $I->see('The category has been deleted.',self::$assertSuccessMsg);
-
-
     }
 
 
