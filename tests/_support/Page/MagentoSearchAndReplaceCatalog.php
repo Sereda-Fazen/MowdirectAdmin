@@ -130,8 +130,6 @@ class MagentoSearchAndReplaceCatalog
         $I->waitForElementVisible(self::$assertDataPage);
     }
 
-
-
     public static $searchAndReplaceDown = '//*[@class="nav-bar"]/ul/li[12]';
     public static $searchAndReplaceCmsDown = '//*[@class="nav-bar"]/ul/li[12]/ul/li[2]/a';
 
@@ -287,8 +285,23 @@ class MagentoSearchAndReplaceCatalog
     public static $searchTermField = '//*[@id="searchterm"]';
     public static $newSearchContinueButton = '//*[@id="content"]//button';
 
-    public function searchAction($searchTerm){
+    public static $filterNameField = '//*[@class="filter"]/th[3]//input';
+    public static $resultName = '//*[@class="data"]//tr[1]/td[3]';
+
+
+    public function searchFilter($pageName){
         $I = $this->tester;
+        $I->fillField(self::$filterNameField,$pageName);
+        $I->waitForElementVisible(self::$filterSearchButton);
+        $I->click(self::$filterSearchButton);
+        $I->waitForElementVisible(self::$resultName);
+        $I->see($pageName,self::$resultName);
+    }
+
+
+    public function massAction($searchTerm){
+        $I = $this->tester;
+        $I->waitForElementNotVisible(self::$loadPageBlock);
         $I->click(self::$checkbox1Table);
         $I->click(self::$actionSearch);
         $I->click(self::$actionSubmitButton);
@@ -301,13 +314,56 @@ class MagentoSearchAndReplaceCatalog
 
 
     public static $actionReplace = '//*[@class="right"]//option[3]';
-    public function replaceFunction(){
+    public static $replaceFilter = '//*[@id="replaceterm"]';
+    public static $continueButton = '//*[@id="content"]//button';
+    public function replaceFunction($replace){
         $I = $this->tester;
-        $I->click('Select Visible');
+        $I->click(self::$checkbox1Table);
         $I->click(self::$actionReplace);
         $I->click(self::$actionSubmitButton);
         $I->waitForElement(self::$assertDataPage);
         $I->see('New Replace',self::$assertDataPage);
+        $I->fillField(self::$replaceFilter,$replace);
+        $I->click(self::$continueButton);
+        $I->waitForElementVisible(self::$assertSuccessMsg);
+        $I->see('Replace term',self::$assertSuccessMsg);
+    }
+
+
+    public static $actionDelete = '//*[@class="right"]//option[2]';
+    public function deleteFunction(){
+        $I = $this->tester;
+        $I->click(self::$checkbox1Table);
+        $I->click(self::$actionDelete);
+        $I->click(self::$actionSubmitButton);
+        $I->acceptPopup();
+        $I->waitForElementVisible(self::$assertSuccessMsg);
+
+    }
+
+    public function undoReplace(){
+        $I = $this->tester;
+        $I->click(self::$checkbox1Table);
+        $I->click(self::$actionReplace);
+        $I->click(self::$actionSubmitButton);
+        $I->acceptPopup();
+        $I->waitForElementVisible(self::$assertSuccessMsg);
+    }
+
+    public static $actionDeleteReplace = '//*[@class="right"]//option[2]';
+    public function deleteReplace(){
+        $I = $this->tester;
+        $I->click(self::$checkbox1Table);
+        $I->click(self::$actionDeleteReplace);
+        $I->click(self::$actionSubmitButton);
+        $I->acceptPopup();
+        $I->waitForElementVisible(self::$assertSuccessMsg);
+    }
+
+    public function UndoReplacement(){
+        $I = $this->tester;
+        $I->click('Undo replacement');
+        $I->waitForElementVisible(self::$assertSuccessMsg);
     }
 
 

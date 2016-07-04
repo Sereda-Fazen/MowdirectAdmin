@@ -15,7 +15,7 @@ class MagentoAdminPanelMowDirectCest
         }
 
     */
-    /**/
+    /*
 
             function T762CreateANewVersionControlledPageAndSaveIt(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageContent $manageContent) {
                 $I->loginAdminPanel('testing','Da1mat1an5');
@@ -368,12 +368,7 @@ class MagentoAdminPanelMowDirectCest
         $manageProducts->searchName('simple test attribute product1');
     }
 
-    function deleteTestProducts(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageProducts $manageProducts) {
-        $I->loginAdminPanel('testing','Da1mat1an5');
-        $manageProducts->goToManageProductsPage();
-        $manageProducts->searchName('simple test');
-        $manageProducts->deleteTestProducts();
-    }
+
 
 
 //// 2. Catalog > Manage Categories
@@ -670,33 +665,97 @@ class MagentoAdminPanelMowDirectCest
     function T1288TestSearchActionFromTheMassActionMenu(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoSearchAndReplaceCatalog $searchAndReplaceCatalog) {
         $I->loginAdminPanel('testing','Da1mat1an5');
         $searchAndReplaceCatalog->goToSearchAndReplaceSelectInProduct();
-        $searchAndReplaceCatalog->searchAction('WOLF');
+        $searchAndReplaceCatalog->searchFilter('simple test product');
+        $searchAndReplaceCatalog->massAction('simple test product');
     }
 
 // 6.2. Search Grid
 
-    function T1290TestReplaceFunctionFromTheMassActionMenu(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoSearchAndReplaceCatalog $searchAndReplaceCatalog) {
+    function T1291TestDeleteLinkInTheGrid(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoSearchAndReplaceCatalog $searchAndReplaceCatalog) {
         $I->loginAdminPanel('testing','Da1mat1an5');
         $searchAndReplaceCatalog->goToSearchAndReplaceSearch();
-        $searchAndReplaceCatalog->replaceFunction();
+        $searchAndReplaceCatalog->deleteFunction();
 
     }
 
+        function T1290TestReplaceFunctionFromTheMassActionMenu(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoSearchAndReplaceCatalog $searchAndReplaceCatalog) {
+            $I->loginAdminPanel('testing','Da1mat1an5');
+            $searchAndReplaceCatalog->goToSearchAndReplaceSearch();
+            $searchAndReplaceCatalog->replaceFunction('simple test product');
+        }
 
-
-
-
-    ///  Delete Test Pages CMS->Manage Content
-    function deleteTestPages(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageContent $manageContent) {
+    function T1293TestUndoReplaceFromTheMassActionMenu(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoSearchAndReplaceCatalog $searchAndReplaceCatalog) {
         $I->loginAdminPanel('testing','Da1mat1an5');
-        $manageContent->goToManagePage();
-        $manageContent->searchPage('test-url-1');
-        $manageContent->deletePage();
-        $manageContent->searchPage('test-non-url-1');
-        $manageContent->deletePage();
+        $searchAndReplaceCatalog->goToSearchAndReplaceReplace();
+        $searchAndReplaceCatalog->undoReplace();
+    }
+
+    function T1294TestDeleteFromTheMassActionMenu(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoSearchAndReplaceCatalog $searchAndReplaceCatalog) {
+        $I->loginAdminPanel('testing','Da1mat1an5');
+        $searchAndReplaceCatalog->goToSearchAndReplaceSelectInProduct();
+        $searchAndReplaceCatalog->searchFilter('simple test product');
+        $searchAndReplaceCatalog->massAction('simple test product');
+        $searchAndReplaceCatalog->replaceFunction('simple test product');
+        $searchAndReplaceCatalog->deleteReplace();
+    }
+
+    function T1295TestUndoReplacmentFromGrid(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoSearchAndReplaceCatalog $searchAndReplaceCatalog) {
+        $I->loginAdminPanel('testing','Da1mat1an5');
+        $searchAndReplaceCatalog->goToSearchAndReplaceSelectInProduct();
+        $searchAndReplaceCatalog->searchFilter('simple test product');
+        $searchAndReplaceCatalog->massAction('simple test product');
+        $searchAndReplaceCatalog->replaceFunction('simple test product');
+        $searchAndReplaceCatalog->UndoReplacement();
+    }
+
+
+// 7. Search and Replace CMS
+////7.1. Pages
+////7.1.1. Select In Pages
+
+    function T1296TestGridViewFilters(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoSearchAndReplaceCms $searchAndReplaceCms) {
+        $I->loginAdminPanel('testing','Da1mat1an5');
+        $searchAndReplaceCms->goToSearchAndReplaceSelectPage();
+        $searchAndReplaceCms->viewFilters();
+    }
+
+    function T1303TestSearchActionMassActionMenu(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoSearchAndReplaceCms $searchAndReplaceCms) {
+        $I->loginAdminPanel('testing','Da1mat1an5');
+        $searchAndReplaceCms->goToSearchAndReplaceSelectPage();
+        $searchAndReplaceCms->massAction('1');
+    }
+*/
+    function T1304TestReplaceFunctionMassActionMenu(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoSearchAndReplaceCms $searchAndReplaceCms) {
+        $I->loginAdminPanel('testing','Da1mat1an5');
+        $searchAndReplaceCms->goToSearchAndReplaceSelectPage();
+        $searchAndReplaceCms->searchFilter('about');
+        $searchAndReplaceCms->massAction('about');
+        $searchAndReplaceCms->undoReplace('about');
     }
 
 
 
+
+
+
+
+    ////  Delete Test Pages CMS->Manage Content
+    /*
+        function deleteTestPages(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageContent $manageContent) {
+            $I->loginAdminPanel('testing','Da1mat1an5');
+            $manageContent->goToManagePage();
+            $manageContent->searchPage('test-url-1');
+            $manageContent->deletePage();
+            $manageContent->searchPage('test-non-url-1');
+            $manageContent->deletePage();
+        }
+
+        function deleteTestProducts(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageProducts $manageProducts) {
+            $I->loginAdminPanel('testing','Da1mat1an5');
+            $manageProducts->goToManageProductsPage();
+            $manageProducts->searchName('simple test');
+            $manageProducts->deleteTestProducts();
+        }
+    */
 
 }
