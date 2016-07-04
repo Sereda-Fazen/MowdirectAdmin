@@ -19,6 +19,7 @@ class AdminPanelLoginSteps extends \AcceptanceTester
     public static $userNameField = '//*[@id="username"]';
     public static $passwordField = '//*[@id="login"]';
     public static $loginButton = '//*[@class="form-buttons"]/input';
+    public static $dashboard = '//*[@class="content-header"]//h3[text()="Dashboard"]';
 
     /// Dashboard Page
 
@@ -33,17 +34,22 @@ class AdminPanelLoginSteps extends \AcceptanceTester
     public function loginAdminPanel($login, $pass)
     {
         $I = $this;
-        $I->amOnPage(self::$URL);
-        $I->fillField(self::$userNameField, $login);
-        $I->fillField(self::$passwordField,$pass);
-        $I->click(self::$loginButton);
-        $I->waitForElement(self::$popUpClose);
         try {
+            $I->amOnPage(self::$URL);
+            $I->fillField(self::$userNameField, $login);
+            $I->fillField(self::$passwordField, $pass);
+            $I->click(self::$loginButton);
             $I->waitForElement(self::$popUpClose);
-            $I->click(self::$popUpClose);
-        }catch (Exception $e){}
-        $I->waitForElement(self::$assertDashboard);
-        $I->see('Dashboard',self::$assertDashboard);
+            try {
+                $I->waitForElement(self::$popUpClose);
+                $I->click(self::$popUpClose);
+            } catch (Exception $e) {
+            }
+            $I->waitForElement(self::$assertDashboard);
+            $I->see('Dashboard', self::$assertDashboard);
+        } catch (Exception $e) {
+            $I->waitForElement(self::$dashboard);
+        }
 
 }
 

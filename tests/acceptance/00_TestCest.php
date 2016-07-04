@@ -2,37 +2,33 @@
 use \Step\Acceptance;
 
 /**
- * @group test
+ * @group template
  */
 class TestCest
 {
 
-    function T832AddACategory(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageCategories $manageCategories)
-    {
-        $I->loginAdminPanel('testing', 'Da1mat1an5');
-        $manageCategories->goToManageCategory();
-        $manageCategories->createCategory('Test category');
+    function T765CreateANewNode(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageHierarchy $magentoManageHierarchy) {
+        $I->loginAdminPanel('testing','Da1mat1an5');
+        $magentoManageHierarchy->goToManageHierarchyPage();
+        $magentoManageHierarchy->createNode('test-title-node','test-url-node');
     }
-    function T832EditCategory(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageCategories $manageCategories)
-    {
-        $manageCategories->editCategory('Test category');
-    }
-    function T832MoveAboveCategory(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageCategories $manageCategories)
-    {
-        $manageCategories->aboveCategory();
-    }
-    function T832MoveBelowCategory(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageCategories $manageCategories)
-    {
-        $manageCategories->belowCategory();
-    }
-    function T832IntoCategory(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageCategories $manageCategories)
-    {
-        $manageCategories->intoSibling();
-    }
-    function T832DeleteCategory(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageCategories $manageCategories)
-    {
-        $manageCategories->deleteCategory();
 
+    //   function T774EditANode(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageHierarchy $magentoManageHierarchy) {
+    //       $I->loginAdminPanel('testing','Da1mat1an5');
+    //       $magentoManageHierarchy->goToManageHierarchyPage();
+    //       $magentoManageHierarchy->editNode('test-title-node');
+    //    }
+
+    function T767DeleteANode(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageHierarchy $magentoManageHierarchy) {
+        $magentoManageHierarchy->deleteNodeFromTree('test-title-node');
+    }
+
+    function T768AddAPageToTheTree(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageHierarchy $magentoManageHierarchy) {
+        $magentoManageHierarchy->addPageToTree1('test-title-1');
+    }
+
+    function T769RemoveAPageFromTheTree(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageHierarchy $magentoManageHierarchy) {
+        $magentoManageHierarchy->deletePageFromTree('test-title-1');
     }
 
 }
