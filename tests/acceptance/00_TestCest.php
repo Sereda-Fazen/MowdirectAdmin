@@ -13,6 +13,11 @@ class TestCest
         $magentoManageHierarchy->createNode('test-title-node','test-url-node');
     }
 
+    function T766MoveAnExistingNode(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageHierarchy $magentoManageHierarchy) {
+
+        $magentoManageHierarchy->moveNote();
+    }
+
     //   function T774EditANode(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageHierarchy $magentoManageHierarchy) {
     //       $I->loginAdminPanel('testing','Da1mat1an5');
     //       $magentoManageHierarchy->goToManageHierarchyPage();
