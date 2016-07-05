@@ -7,7 +7,7 @@
  */
 
 namespace Page;
-
+use Exception;
 
 class MagentoManageContent
 {
@@ -29,7 +29,7 @@ class MagentoManageContent
 
 // New Page
 
-    public static $assertNewPage = '//*[@class="content-header"]/h3';
+    public static $assertNewPage = '//*[@class="content-header"]//h3';
     public static $titleField = '//*[@class="hor-scroll"]/table//tr[1]/td[2]/input';
     public static $urlKeyField = '//*[@class="hor-scroll"]/table//tr[2]/td[2]/input';
     public static $allStoreView = '//*[@class="hor-scroll"]/table//tr[3]/td[2]//select/option[1]';
@@ -46,6 +46,7 @@ class MagentoManageContent
     public static $titleEditPage = '//*[@id="page_title"]';
     public static $urlEditPage = '//*[@id="page_identifier"]';
     public static $SaveEditPageButton = '//*[@class="main-col-inner"]/div[2]//button[5]';
+    public static $backEditPageButton = '//*[@class="main-col-inner"]/div[2]//button[1]';
 
 
 
@@ -70,49 +71,58 @@ class MagentoManageContent
 
     }
 
+    public static $errorMessage = '//*[@id="messages"]/ul/li';
 
     public function createNewControlledPage ($title,$urlKey,$contentHeading,$content){
         $I = $this->tester;
-        $I ->click(self::$addNewPageButton);
-        $I->waitForElement(self::$assertNewPage);
-        $I->see('New Page',self::$assertNewPage);
-        $I->fillField(self::$titleField,$title);
-        $I->fillField(self::$urlKeyField,$urlKey);
-        $I->click(self::$allStoreView);
-        $I->click(self::$statusPublished);
-        $I->click(self::$underVerContrYes);
-        $I->click(self::$contentLink);
-        $I->waitForElement(self::$assertContentHeading);
-        $I->see('Content Heading',self::$assertContentHeading);
-        $I->fillField(self::$contentHeadingField,$contentHeading);
-        $I->fillField(self::$pageContentField,$content);
-        $I->click(self::$savePageButton);
-        $I->waitForElement(self::$assertSuccessMsg);
-        $I->see('The page has been saved.',self::$assertSuccessMsg);
+        try {
+            $I->click(self::$addNewPageButton);
+            $I->waitForElement(self::$assertNewPage);
+            $I->see('New Page', self::$assertNewPage);
+            $I->fillField(self::$titleField, $title);
+            $I->fillField(self::$urlKeyField, $urlKey);
+            $I->click(self::$allStoreView);
+            $I->click(self::$statusPublished);
+            $I->click(self::$underVerContrYes);
+            $I->click(self::$contentLink);
+            $I->waitForElement(self::$assertContentHeading);
+            $I->see('Content Heading', self::$assertContentHeading);
+            $I->fillField(self::$contentHeadingField, $contentHeading);
+            $I->fillField(self::$pageContentField, $content);
+            $I->click(self::$savePageButton);
+            $I->waitForElement(self::$assertSuccessMsg);
+            $I->see('The page has been saved.', self::$assertSuccessMsg);
+        }catch (Exception $e) {
+            $I->waitForElement(self::$errorMessage);
+            $I->see('A page URL key for specified store already exists.',self::$errorMessage);
+            }
         return $this;
-
-
     }
 
 
     public function createNewNonVersionControlledPage ($title,$urlKey,$contentHeading,$content){
         $I = $this->tester;
-        $I ->click(self::$addNewPageButton);
-        $I->waitForElement(self::$assertNewPage);
-        $I->see('New Page',self::$assertNewPage);
-        $I->fillField(self::$titleField,$title);
-        $I->fillField(self::$urlKeyField,$urlKey);
-        $I->click(self::$allStoreView);
-        $I->click(self::$statusPublished);
-        $I->click(self::$underVerContrNo);
-        $I->click(self::$contentLink);
-        $I->waitForElement(self::$assertContentHeading);
-        $I->see('Content Heading',self::$assertContentHeading);
-        $I->fillField(self::$contentHeadingField,$contentHeading);
-        $I->fillField(self::$pageContentField,$content);
-        $I->click(self::$savePageButton);
-        $I->waitForElement(self::$assertSuccessMsg);
-        $I->see('The page has been saved.',self::$assertSuccessMsg);
+        try {
+            $I->click(self::$addNewPageButton);
+            $I->waitForElement(self::$assertNewPage);
+            $I->see('New Page', self::$assertNewPage);
+            $I->fillField(self::$titleField, $title);
+            $I->fillField(self::$urlKeyField, $urlKey);
+            $I->click(self::$allStoreView);
+            $I->click(self::$statusPublished);
+            $I->click(self::$underVerContrNo);
+            $I->click(self::$contentLink);
+            $I->waitForElement(self::$assertContentHeading);
+            $I->see('Content Heading', self::$assertContentHeading);
+            $I->fillField(self::$contentHeadingField, $contentHeading);
+            $I->fillField(self::$pageContentField, $content);
+            $I->click(self::$savePageButton);
+            $I->waitForElement(self::$assertSuccessMsg);
+            $I->see('The page has been saved.', self::$assertSuccessMsg);
+        }catch (Exception $e) {
+            $I->waitForElement(self::$errorMessage);
+            $I->see('A page URL key for specified store already exists.',self::$errorMessage);
+        }
         return $this;
     }
 
@@ -130,6 +140,7 @@ class MagentoManageContent
         public function changeNonVersionPage ($title1,$url1){
 
             $I = $this->tester;
+            try{
             $I->click(self::$urlColumnResult);
             $I->waitForElement(self::$assertNewPage);
             $I->see('Edit Page', self::$assertNewPage);
@@ -138,6 +149,13 @@ class MagentoManageContent
             $I->click(self::$SaveEditPageButton);
             $I->waitForElement(self::$assertSuccessMsg);
             $I->see('The page has been saved.',self::$assertSuccessMsg);
+            }catch (Exception $e) {
+                $I->waitForElement(self::$errorMessage);
+                $I->see('A page URL key for specified store already exists.',self::$errorMessage);
+                $I->click(self::$backEditPageButton);
+                $I->waitForElementVisible(self::$assertNewPage);
+                $I->see('Manage Pages',self::$assertNewPage);
+            }
             return $this;
         }
 

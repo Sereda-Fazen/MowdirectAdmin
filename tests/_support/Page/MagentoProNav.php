@@ -7,6 +7,7 @@
  */
 
 namespace Page;
+use Exception;
 
 
 class MagentoProNav
@@ -49,6 +50,7 @@ class MagentoProNav
     public static $disableStatusBlockDropDown = '//*[@class="form-list"]/tbody/tr[10]//option[2]';
     public static $saveItemButton = '//*[@id="content"]//button[3]';
     public static $editPageDeleteButton = '//*[@id="content"]//button[3]';
+    public static $errorMessage = '//*[@id="messages"]/ul/li';
 
     protected $tester;
     public function __construct(\AcceptanceTester $I)
@@ -65,8 +67,11 @@ class MagentoProNav
         $I->see('ProNav Items Manager',self::$assertProNavManagerPage);
     }
 
+    public static $backEditPageButton = '//*[@class="main-col-inner"]/div[2]//button[1]';
+
     public function createProNavItem($nameProNav,$index) {
         $I = $this->tester;
+        try{
         $I ->click(self::$addProVanItemButton);
         $I->waitForElement(self::$assertProNavManagerPage);
         $I->see('Add ProNav Item',self::$assertProNavManagerPage);
@@ -80,7 +85,12 @@ class MagentoProNav
     //    $I->click(self::$staticBlockDropDown);
         $I->click(self::$saveItemButton);
         $I->waitForElement(self::$assertSuccessMsg);
-        $I->see('Item was successfully saved',self::$assertSuccessMsg);
+        $I->see('Item was successfully saved',self::$assertSuccessMsg);}
+        catch  (Exception $e){
+            $I->waitForElementVisible(self::$errorMessage);
+            $I->click(self::$backEditPageButton);
+        }
+
     }
 
     public function createProNavItem1($nameProNav,$url,$index,$cssId,$cssClass,$linkCssId,$linkCssClass) {
@@ -118,11 +128,8 @@ class MagentoProNav
 
     public function deleteProNavItemActionMenu($nameProNav) {
         $I = $this->tester;
-        $I->fillField(self::$filterNameField,$nameProNav);
-        $I->click(self::$filterSearchButton);
-        $I->waitForElement(self::$filterSearchResult);
         $I->see($nameProNav,self::$filterSearchResult);
-        $I->click(self::$checkboxSearchResult);
+        $I->click('Select All');
         $I->click(self::$deleteActionDropDown);
         $I->click(self::$submitActionButton);
         $I->acceptPopup();
@@ -132,11 +139,18 @@ class MagentoProNav
 
     public static $loadPageBlock = './/*[@id="loading_mask_loader"]';
 
+    public function searchPronav($nameProNav) {
+        $I = $this->tester;
+        $I->fillField(self::$filterNameField,$nameProNav);
+        $I->click(self::$filterSearchButton);
+        $I->waitForElement(self::$filterSearchResult);
+        $I->see($nameProNav,self::$filterSearchResult);
+    }
+
     public function changeItemStatusOnActionMenu($nameProNav) {
         $I = $this->tester;
-        $I->click(self::$filterID);
-        $I->wait(2);
-        $I->waitForElementNotVisible(self::$loadPageBlock);
+    //    $I->click(self::$filterID);
+       // $I->waitForElementNotVisible(self::$loadPageBlock);
       //  $I->fillField(self::$filterNameField,$nameProNav);
       //  $I->click(self::$filterSearchButton);
         $I->waitForElement(self::$filterSearchResult);
@@ -167,6 +181,8 @@ class MagentoProNav
         $I->waitForElementNotVisible(self::$loadPageBlock);
         $I->click(self::$filterName);
         $I->click(self::$filterUrl);
+        $I->click(self::$filterResetButton);
+        $I->waitForElementNotVisible(self::$loadPageBlock);
 
     }
 

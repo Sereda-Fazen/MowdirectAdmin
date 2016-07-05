@@ -7,6 +7,7 @@
  */
 
 namespace Page;
+use Exception;
 
 
 class MagentoStaticBlocks
@@ -104,23 +105,21 @@ class MagentoStaticBlocks
 
     public static $loadPageBlock = './/*[@id="loading_mask_loader"]';
 
-    public function variosFilter($identifier,$dataCreatedFrom,$dataCreatedTo,$lastModFrom,$lastModTo) {
+    public function variousFilter($dataCreatedFrom,$dataCreatedTo,$lastModFrom,$lastModTo) {
         $I = $this->tester;
-        $I->fillField(self::$filterIdentifierField,$identifier);
-        $I->click(self::$filterSearchButton);
-        $I->waitForElement(self::$filterSearchResult);
-        $I->see($identifier,self::$filterSearchResult);
-        $I->click(self::$filterResetButton);
+
         $I->fillField(self::$filterDataCreatedFrom,$dataCreatedFrom);
         $I->fillField(self::$filterDataCreatedTo,$dataCreatedTo);
         $I->fillField(self::$filterLastModFrom,$lastModFrom);
         $I->fillField(self::$filterLastModTo,$lastModTo);
         $I->click(self::$filterSearchButton);
+        $I->waitForElementNotVisible(self::$loadPageBlock);
         $I->click(self::$filterIdentifier);
         $I->click(self::$filterResetButton);
+        $I->waitForElementNotVisible(self::$loadPageBlock);
         $I->click(self::$filterStoreViewOpt5);
         $I->click(self::$filterSearchButton);
         $I->waitForElementNotVisible(self::$loadPageBlock);
-    }
+            }
 
 }

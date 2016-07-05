@@ -93,7 +93,8 @@ class MagentoCustomerSegments
         $I->click(self::$saveNewSegmentButton);
         $I->waitForElementVisible(self::$assertSuccessMsg);
         $I->see('The segment has been saved.',self::$assertSuccessMsg);
-
+        $I->click(self::$filterResetButton);
+        $I->waitForElementNotVisible(self::$loadPageBlock);
     }
 
     public function searchSegment($segmentName)

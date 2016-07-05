@@ -7,6 +7,7 @@
  */
 
 namespace Page;
+use Exception;
 
 
 class MagentoManageHierarchy
@@ -69,6 +70,7 @@ class MagentoManageHierarchy
 
     public function createNode($testTitleNode,$testUrlNode) {
         $I = $this->tester;
+        try {
         $I->click(self::$addNodeButton);
         $I->waitForElement(self::$nodeTitleField);
         $I->fillField(self::$nodeTitleField,$testTitleNode);
@@ -79,10 +81,15 @@ class MagentoManageHierarchy
         $I->click(self::$saveButton);
         $I->waitForElement(self::$assertSuccessMsg);
         $I->see('The hierarchy has been saved.',self::$assertSuccessMsg);
-    }
+            }catch (Exception $e){
+            $I->acceptPopup();
+        }
+        }
+
 
     public function editNode11($node) {
         $I = $this->tester;
+        try{
         $I->see($node,self::$nodeTable);
         $I->click($node);
         $I->wait(2);
@@ -94,6 +101,9 @@ class MagentoManageHierarchy
         $I->click(self::$saveButton);
         $I->waitForElement(self::$assertSuccessMsg);
         $I->see('The hierarchy has been saved.',self::$assertSuccessMsg);
+    }       catch (Exception $e){
+            $I->acceptPopup();
+}
 
     }
 

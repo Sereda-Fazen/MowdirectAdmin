@@ -7,6 +7,7 @@
  */
 
 namespace Page;
+use Exception;
 
 
 class MagentoManageCategories
@@ -25,6 +26,7 @@ class MagentoManageCategories
     public static $loading = '//*[@id="loading_mask_loader"]';
     public static $testCategoryBelow = '//*[@class="tree-holder"]//ul/div/li[6]//a/span[text()="Test category (0)"]';
     public static $testCategoryAbove = '//*[@class="tree-holder"]//ul/div/li[5]//li//a//span[contains(text(), "Test")]';
+    public static $testCategoryAbove1 = '//*[@class="tree-holder"]//span[contains(text(), "Test category")]';
     public static $homePage = '//*[@class="tree-holder"]//ul/div/li[5]//li//a/span[contains(text(), "Homepage")]';
     public static $best = '//*[@class="tree-holder"]//ul/div/li[5]//li//a/span[contains(text(),"The Best Deals")]';
     public static $bestAll = '//*[@class="tree-holder"]//ul/div/li[5]//li//a/span[contains(text(),"The Best Deals")]/../../img';
@@ -47,14 +49,15 @@ class MagentoManageCategories
         $I->moveMouseOver(self::$categoriesDown);
         $I->waitForElement(self::$manageCategories);
         $I->click(self::$manageCategories);
+        $I->waitForElementNotVisible(self::$loading,30);
         $I->waitForElementVisible(self::$assertDataPage);
         $I->see('New Root Category',self::$assertDataPage);
-        $I->waitForElementNotVisible(self::$loading,30);
+
     }
 
-    public function createCategory($name)
-    {
+    public function createCategory($name)    {
         $I = $this->tester;
+        try{
         $I->fillField(self::$nameField, $name);
         $I->waitForElementNotVisible(self::$loading);
         $I->waitForElement(self::$saveCategory);
@@ -63,6 +66,8 @@ class MagentoManageCategories
         $I->see('The category has been saved.', self::$assertSuccessMsg);
         $I->see($name, self::$categoryTree);
         $I->seeElement(self::$testCategoryBelow);
+            }catch (Exception $e) {
+            }
     }
 
     public function editCategory($name){
@@ -124,7 +129,7 @@ class MagentoManageCategories
     }
     public function deleteCategory(){
         $I = $this->tester;
-        $I->click(self::$testCategoryAbove);
+        $I->click(self::$testCategoryAbove1);
         $I->waitForElementNotVisible(self::$loading,30);
         $I->waitForElement(self::$deleteEditButton);
         $I->click(self::$deleteEditButton);
