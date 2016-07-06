@@ -175,7 +175,9 @@ class MagentoCustomer
     }
 
 
-    // Customers Groups
+    /**
+     * Customers Group
+     */
 
     //add group
     public static $customerGroup = '//*[@class="nav-bar"]//li//ul//a/span[text()="Customer Groups"]';
@@ -197,16 +199,6 @@ class MagentoCustomer
     // delete
 
     public static $delete = '//div[@class="content-header"]//button//span[text()="Delete Customer Group"]';
-
-
-
-
-
-
-
-
-
-
 
 
     public function addGroup(){
@@ -269,6 +261,64 @@ class MagentoCustomer
         $I->waitForElement(self::$assertSuccessMsg);
         $I->see('The customer group has been deleted.',self::$assertSuccessMsg);
     }
+
+    /**
+     * Invitations
+     */
+    public static $customerInvitations = '//*[@class="nav-bar"]//li//ul//a/span[text()="Invitations"]';
+    public static $invitations = '//*[@class="content-header"]//h3[text()="Manage Invitations"]';
+
+    public static $saveInvitation = '//*[@class="content-header"]//button//span[text()="Save"]';
+    public static $emptyEmailInvitation = '//*[@name="email"]/../div[contains(text(),"This")]';
+    public static $fieldEmail = '//*[@name="email"]';
+
+    public static $foundEmailInvitations = '//*[@class="grid"]//tbody//tr/td[contains(text(),"test_mowdirect@yahho.co.uk")]';
+    public static $emailInvitation = '//*[@class="grid"]//tbody//tr/td[contains(text(),"test_mowdirect@yahho.co.uk")]/../td[contains(text(),"Sent")]/../td/input';
+    public static $error = '//div[@id="messages"]';
+    public static $discardedInvitation = '//*[@class="grid"]//tbody//tr/td[contains(text(),"test_mowdirect@yahho.co.uk")]/../td[contains(text(),"Discarded")]/../td/input';
+
+
+    public function addInvitations()
+    {
+        $I = $this->tester;
+        self::goMagentoCustomer();
+        $I->waitForElement(self::$customerInvitations);
+        $I->click(self::$customerInvitations);
+        $I->waitForElement(self::$invitations);
+        $I->click(static::$addGroup);
+        $I->waitForElement(self::$saveInvitation);
+        $I->click(self::$saveInvitation);
+        $I->seeElement(self::$emptyEmailInvitation);
+        $I->fillField(self::$fieldEmail, 'test_mowdirect@yahho.co.uk');
+        $I->click(self::$saveInvitation);
+        $I->waitForElement(self::$assertSuccessMsg);
+        $I->see('1 invitation(s) were sent.', self::$assertSuccessMsg);
+        $I->waitForElement(self::$foundEmailInvitations);
+    }
+    public function resentAnInvitation(){
+        $I = $this->tester;
+        $I->waitForElement(self::$emailInvitation);
+        $I->click(self::$emailInvitation);
+        $I->selectOption(static::$actions, 'Send Selected');
+        $I->click(static::$submit);
+        $I->waitForElement(self::$error);
+        $I->see('No invitations have been resent',self::$error);
+    }
+
+    public function discardAnInvitation(){
+        $I = $this->tester;
+        $I->waitForElement(self::$emailInvitation);
+        $I->click(self::$emailInvitation);
+        $I->selectOption(static::$actions, 'Discard Selected');
+        $I->click(static::$submit);
+        $I->acceptPopup();
+        $I->waitForElement(self::$assertSuccessMsg);
+        $I->see('1 of 1 invitations were discarded.', self::$assertSuccessMsg);
+        $I->waitForElement(self::$discardedInvitation);
+
+
+    }
+
 
 
 }
