@@ -7,10 +7,14 @@
  */
 
 namespace Page;
+use Exception;
 
 
 class MagentoManageHierarchy
 {
+
+    public static $URL = '/admin';
+
     public static $cmsDropDown = '//*[@class="nav-bar"]/ul/li[8]';
     public static $pagesDropDown = '//*[@class="nav-bar"]/ul/li[8]/ul/li[1]/a/span';
     public static $manageHierarchy = '//*[@class="nav-bar"]/ul/li[8]/ul/li[1]/ul/li[2]/a/span';
@@ -62,7 +66,8 @@ class MagentoManageHierarchy
 
     public function goToManageHierarchyPage() {
         $I = $this->tester;
-        $I->moveMouseOver(self::$cmsDropDown);
+        $I->amOnPage(self::$URL);
+        $I ->moveMouseOver(self::$cmsDropDown);
         $I->waitForElement(self::$pagesDropDown);
         $I->moveMouseOver(self::$pagesDropDown);
         $I->waitForElement(self::$manageHierarchy);
@@ -71,6 +76,7 @@ class MagentoManageHierarchy
 
     public function createNode($testTitleNode,$testUrlNode) {
         $I = $this->tester;
+        try {
         $I->click(self::$addNodeButton);
         $I->waitForElement(self::$nodeTitleField);
         $I->fillField(self::$nodeTitleField,$testTitleNode);
@@ -81,7 +87,11 @@ class MagentoManageHierarchy
         $I->click(self::$saveButton);
         $I->waitForElement(self::$assertSuccessMsg);
         $I->see('The hierarchy has been saved.',self::$assertSuccessMsg);
-    }
+            }catch (Exception $e){
+            $I->acceptPopup();
+        }
+        }
+
 
     public function moveNode(){
         $I = $this->tester;
@@ -96,6 +106,7 @@ class MagentoManageHierarchy
 
     public function editNode11($node) {
         $I = $this->tester;
+        try{
         $I->see($node,self::$nodeTable);
         $I->click($node);
         $I->wait(2);
@@ -107,6 +118,9 @@ class MagentoManageHierarchy
         $I->click(self::$saveButton);
         $I->waitForElement(self::$assertSuccessMsg);
         $I->see('The hierarchy has been saved.',self::$assertSuccessMsg);
+    }       catch (Exception $e){
+            $I->acceptPopup();
+}
 
     }
 

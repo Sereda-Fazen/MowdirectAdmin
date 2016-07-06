@@ -115,6 +115,7 @@ class MagentoBanners
         $I->waitForElementNotVisible(self::$loadPageBlock);
         $I->click(self::$filterSortBannerName);
         $I->click(self::$filterStoreViewOpt4);
+        $I->waitForElementNotVisible(self::$loadPageBlock);
         $I->click(self::$filterSearchButton);
         $I->waitForElementNotVisible(self::$loadPageBlock);
     }

@@ -7,6 +7,7 @@
  */
 
 namespace Page;
+use Exception;
 
 
 class MagentoManageAttributes
@@ -102,19 +103,25 @@ class MagentoManageAttributes
     public static $manageLabelOptionTab = '//*[@class="side-col"]//li[2]/a';
     public static $adminField = '//*[@class="main-col-inner"]//tr[2]/td[1]/input';
 
+    public static $errorMessage = '//*[@id="messages"]/ul/li';
+
     public function addAttribute($attributeTestCode,$admin){
         $I = $this->tester;
-        $I->click(self::$addNewAttributeButton);
-        $I->waitForElementVisible(self::$assertDataPage);
-        $I->see('New Product Attribute',self::$assertDataPage);
-        $I->fillField(self::$attributeCodeField,$attributeTestCode);
-        $I->click(self::$applyToAllProdDown);
-        $I->click(self::$manageLabelOptionTab);
-        $I->waitForElementVisible(self::$adminField);
-        $I->fillField(self::$adminField,$admin);
-        $I->click(self::$saveNewAttributeButton);
-        $I->waitForElement(self::$assertSuccessMsg);
-        $I->see('The product attribute has been saved.',self::$assertSuccessMsg);
+        try {
+            $I->click(self::$addNewAttributeButton);
+            $I->waitForElementVisible(self::$assertDataPage);
+            $I->see('New Product Attribute', self::$assertDataPage);
+            $I->fillField(self::$attributeCodeField, $attributeTestCode);
+            $I->click(self::$applyToAllProdDown);
+            $I->click(self::$manageLabelOptionTab);
+            $I->waitForElementVisible(self::$adminField);
+            $I->fillField(self::$adminField, $admin);
+            $I->click(self::$saveNewAttributeButton);
+            $I->waitForElement(self::$assertSuccessMsg);
+            $I->see('The product attribute has been saved.', self::$assertSuccessMsg);
+        }catch (Exception $e) {
+            $I->waitForElement(self::$errorMessage);
+        }
     }
 
     public function searchAttributeCode($attributeCode){

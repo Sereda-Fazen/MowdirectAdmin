@@ -98,14 +98,14 @@ class MagentoSearchAndReplaceCms
     public static $searchTermField = '//*[@id="searchterm"]';
     public static $newSearchContinueButton = '//*[@id="content"]//button';
 
-    public static $filterNameField = '//*[@class="filter"]/th[3]//input';
+    public static $filterNameField = '//*[@class="filter"]/th[2]//input';
     public static $resultName = '//*[@class="data"]//tr[1]/td[3]';
 
 
     public function massAction($searchTerm){
         $I = $this->tester;
         $I->waitForElementNotVisible(self::$loadPageBlock);
-        $I->click(self::$checkbox1Table);
+        $I->click('Select All');
         $I->click(self::$actionSearch);
         $I->click(self::$actionSubmitButton);
         $I->waitForElement(self::$assertDataPage);
@@ -130,7 +130,8 @@ class MagentoSearchAndReplaceCms
 
     public function undoReplace($replace){
         $I = $this->tester;
-        $I->click(self::$checkbox1Table);
+     //   $I->click(self::$checkbox1Table);
+        $I->click('Select Visible');
         $I->click(self::$actionReplace);
         $I->click(self::$actionSubmitButton);
         $I->waitForElementVisible(self::$assertDataPage);

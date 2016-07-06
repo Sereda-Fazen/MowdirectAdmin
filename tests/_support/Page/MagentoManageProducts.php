@@ -7,6 +7,7 @@
  */
 
 namespace Page;
+use Exception;
 
 
 class MagentoManageProducts
@@ -65,25 +66,30 @@ class MagentoManageProducts
         $I->see('Manage Products',self::$assertDataPage);
     }
 
+    public static $loadPageBlock = './/*[@id="loading_mask_loader"]';
+
     public function variousFilter() {
         $I = $this->tester;
-        $I->click(self::$filterStatusEnable);
-        $I->click(self::$filterSearchButton);
-        $I->wait(2);
+      //  $I->waitForElementNotVisible(self::$loadPageBlock);
+       // $I->click(self::$filterStatusEnable);
+      //  $I->click(self::$filterSearchButton);
+        $I->waitForElementNotVisible(self::$loadPageBlock);
         $I->waitForElementVisible(self::$filterStatusResult);
         $I->see('Enabled',self::$filterStatusResult);
         $I->click(self::$filterWebsiteMainWebsite);
         $I->click(self::$filterSearchButton);
-        $I->wait(2);
+        $I->waitForElementNotVisible(self::$loadPageBlock);
         $I->waitForElementVisible(self::$filterWebsiteResult);
         $I->see('Main Website',self::$filterWebsiteResult);
-        $I->click(self::$filterNameSort);
-        $I->wait(2);
+       // $I->click(self::$filterNameSort);
+      //  $I->waitForElementNotVisible(self::$loadPageBlock);
         $I->click(self::$filterTypeSimpleProduct);
         $I->click(self::$filterSearchButton);
-        $I->wait(2);
+        $I->waitForElementNotVisible(self::$loadPageBlock);
         $I->waitForElementVisible(self::$filterTypeResult);
         $I->see('Simple Product',self::$filterTypeResult);
+        $I->click(self::$filterResetButton);
+        $I->waitForElementNotVisible(self::$loadPageBlock);
     }
 
     // New Page
@@ -98,6 +104,7 @@ class MagentoManageProducts
     public static $weightField = '//*[@id="weight"]';
     public static $statusEnable = '//*[@id="status"]/option[2]';
     public static $newPageSaveButton = '//*[@id="content"]/div//button[3]';
+    public static $newPageBackButton = '//*[@id="content"]/div//button[1]';
     //Price tab
     public static $priceTab = '//*[@class="side-col"]//li[2]';
     public static $priceField = '//*[@id="price"]';
@@ -115,6 +122,7 @@ class MagentoManageProducts
 
     public function addSimpleProduct($name,$description,$shortDescription,$sku,$weight,$price){
         $I = $this->tester;
+        try{
         $I->click(self::$addProductButton);
         $I->waitForElementVisible(self::$assertDataPage);
         $I->see('New Product',self::$assertDataPage);
@@ -140,10 +148,16 @@ class MagentoManageProducts
         $I->click(self::$newPageSaveButton);
         $I->waitForElementVisible(self::$assertSuccessMsg);
         $I->see('The product has been saved.',self::$assertSuccessMsg);
+        }catch (Exception $e){
+            $I->click(self::$newPageBackButton);
+            $I->waitForElementVisible(self::$assertDataPage);
+            $I->see('Manage Products',self::$assertDataPage);
+            }
     }
 
     public function addSimpleProductCustomerAttributes($name,$description,$shortDescription,$sku,$weight,$price){
         $I = $this->tester;
+        try{
         $I->click(self::$addProductButton);
         $I->waitForElementVisible(self::$assertDataPage);
         $I->see('New Product',self::$assertDataPage);
@@ -169,6 +183,11 @@ class MagentoManageProducts
         $I->click(self::$newPageSaveButton);
         $I->waitForElementVisible(self::$assertSuccessMsg);
         $I->see('The product has been saved.',self::$assertSuccessMsg);
+            }catch (Exception $e){
+            $I->click(self::$newPageBackButton);
+            $I->waitForElementVisible(self::$assertDataPage);
+            $I->see('Manage Products',self::$assertDataPage);
+            }
     }
 
     public function searchName($name){
@@ -177,17 +196,22 @@ class MagentoManageProducts
         $I->click(self::$filterSearchButton);
         $I->waitForElementVisible(self::$filterNameResult);
         $I->see($name, self::$filterNameResult);
-        $I->wait(2);
+        $I->waitForElementNotVisible(self::$loadPageBlock);
     }
 
     public function editAProductLink(){
         $I = $this->tester;
         $I->click(self::$filterEditResult);
         $I->waitForElementVisible(self::$assertDataPage);
-    }
+        $I->click(self::$newPageBackButton);
+        $I->see('Manage Products',self::$assertDataPage);
+        $I->click(self::$filterResetButton);
+        $I->waitForElementNotVisible(self::$loadPageBlock);
+            }
 
     public function editAProduct($sku,$weight){
         $I = $this->tester;
+            try{
         $I->click(self::$filterNameResult);
         $I->waitForElementVisible(self::$assertDataPage);
         $I->fillField(self::$skuField,$sku);
@@ -195,6 +219,15 @@ class MagentoManageProducts
         $I->click(self::$editPageSaveButton);
         $I->waitForElement(self::$assertSuccessMsg);
         $I->see('The product has been saved.',self::$assertSuccessMsg);
+        $I->click(self::$filterResetButton);
+        $I->waitForElementNotVisible(self::$loadPageBlock);
+            }catch (Exception $e){
+                $I->click(self::$newPageBackButton);
+                $I->waitForElementVisible(self::$assertDataPage);
+                $I->see('Manage Products',self::$assertDataPage);
+                $I->click(self::$filterResetButton);
+                $I->waitForElementNotVisible(self::$loadPageBlock);
+        }
     }
 
     public function changeStatus(){
@@ -203,9 +236,11 @@ class MagentoManageProducts
         $I->click(self::$changeStatusActionDropDown);
         $I->click(self::$disableStatusActionDropDown);
         $I->click(self::$submitActionButton);
-        $I->wait(2);
+        $I->waitForElementNotVisible(self::$loadPageBlock);
         $I->waitForElement(self::$filterStatusResult);
         $I->see('Disable',self::$filterStatusResult);
+        $I->click(self::$filterResetButton);
+        $I->waitForElementNotVisible(self::$loadPageBlock);
         }
 
 // Update attributes page
@@ -219,17 +254,19 @@ class MagentoManageProducts
         $I->waitForElementVisible(self::$assertDataPage);
         $I->see('Update attributes',self::$assertDataPage);
         $I->click(self::$nameCheckbox);
-        $I->wait(1);
+        $I->waitForElementNotVisible(self::$loadPageBlock);
         $I->fillField(self::$nameField,$name);
         $I->click(self::$newPageSaveButton);
         $I->waitForElementVisible(self::$assertSuccessMsg);
+        $I->click(self::$filterResetButton);
+        $I->waitForElementNotVisible(self::$loadPageBlock);
         }
 
     public function duplicate(){
         $I = $this->tester;
         $I->click(self::$filterNameResult);
         $I->waitForElementVisible(self::$assertDataPage);
-        $I->see('simple test attribute product',self::$assertDataPage);
+        $I->see('simple test product',self::$assertDataPage);
         $I->click(self::$editDuplicateButton);
         $I->waitForElementVisible(self::$assertSuccessMsg);
         $I->see('The product has been duplicated.',self::$assertSuccessMsg);
@@ -247,6 +284,8 @@ class MagentoManageProducts
         $I->waitForElementVisible(self::$nameFieldValue);
         $I->click(self::$editBackButton);
         $I->waitForElementVisible(self::$assertDataPage);
+        $I->click(self::$filterResetButton);
+        $I->waitForElementNotVisible(self::$loadPageBlock);
     }
 
     //Attribute page
@@ -256,9 +295,12 @@ class MagentoManageProducts
     public function createAnAttribute(){
         $I = $this->tester;
         $I->click(self::$filterNameResult);
-        $I->waitForElementVisible(self::$assertDataPage);
-        $I->click(self::$createAttributeButton);
-        $I->wait(3);
+        $I->waitForElementVisible(self::$createAttributeButton);
+        $I->click(self::$newPageBackButton);
+        $I->click(self::$filterResetButton);
+        $I->waitForElementNotVisible(self::$loadPageBlock);
+    //    $I->click(self::$createAttributeButton);
+    //    $I->waitForElementNotVisible(self::$loadPageBlock);
     //    $I->waitForElementVisible(self::$assertDataPage);
     //    $I->see('New Product Attribute',self::$assertDataPage);
 
