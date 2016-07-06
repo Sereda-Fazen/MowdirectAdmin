@@ -113,5 +113,45 @@ class TestAdminPanelCest
         $manageCategories->checkSubscribe('Delete');
     }
 
+    /**
+     * @param Acceptance\AdminPanelLoginSteps $I
+     * @param \Page\MagentoCustomer $manageCategories
+     * 1.2. New/Edit Customer View
+     */
+/*
+    function T891AddNewCustomer (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoCustomer $manageCategories)
+    {
+        $I->loginAdminPanel('testing', 'Da1mat1an5');
+        $manageCategories->goMagentoCustomer();
+        //$manageCategories->addNewCustomer();
+        $manageCategories->editCustomer();
+    }
+*/
+
+
+    /**
+     * @param Acceptance\AdminPanelLoginSteps $I
+     * @param \Page\MagentoCustomer $manageCategories
+     * 2. Customers -> Customer Groups
+     */
+
+    function T897AddNewGroup (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoCustomer $manageCategories)
+    {
+        $I->loginAdminPanel('testing', 'Da1mat1an5');
+        $manageCategories->goMagentoCustomer();
+        $manageCategories->addGroup();
+    }
+    function T896TestFilters (\Page\MagentoCustomer $manageCategories)
+    {
+        $manageCategories->filterGroup();
+    }
+    function T898EditGroup (\Page\MagentoCustomer $manageCategories)
+    {
+        $manageCategories->editGroup();
+    }
+    function T905DeleteGroup (\Page\MagentoCustomer $manageCategories)
+    {
+        $manageCategories->deleteGroup();
+    }
 }
 

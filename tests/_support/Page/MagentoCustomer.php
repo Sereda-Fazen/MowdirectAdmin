@@ -33,16 +33,11 @@ class MagentoCustomer
     public static $password = '//*[@name="account[password]"]';
     public static $emptyPass = '//*[@name="account[password]"]/../div[contains(text(),"This")]';
 
-
     public static $saveCustomer = '//*[@class="content-header"]//button//span[text()="Save Customer"]';
-
-
-
     public static $email ='//*[@class="grid"]//tbody//tr/td[contains(text(),"testEmail@gmail.com")]/../td/input';
 
-
-
     protected $tester;
+
     public function __construct(\AcceptanceTester $I)
     {
         $this->tester = $I; // подкл. конструктора
@@ -53,18 +48,15 @@ class MagentoCustomer
         $I = $this->tester;
         $I->waitForElement(self::$moveCustomer);
         $I->moveMouseOver(self::$moveCustomer);
-        $I->waitForElement(self::$manageCustomers);
-        $I->click(self::$manageCustomers);
-        $I->waitForElement(self::$h3);
     }
-
-
-
 
 
     public function addNewCustomer()
     {
         $I = $this->tester;
+        $I->waitForElement(self::$manageCustomers);
+        $I->click(self::$manageCustomers);
+        $I->waitForElement(self::$h3);
         $I->click(self::$addCustomer);
         $I->waitForElement(self::$associate);
         $I->click(self::$saveCustomer);
@@ -96,10 +88,6 @@ class MagentoCustomer
     public static $foundName = '//*[@class="grid"]//tbody//tr/td[contains(text(),"Test Name")]';
     public static $foundEmail = '//*[@class="grid"]//tbody//tr/td[contains(text(),"testEmail@gmail.com")]';
     public static $foundGroup = '//*[@class="grid"]//tbody//tr/td[contains(text(),"Test Name")]/../td[contains(text(),"General")]';
-
-
-
-
 
 
 
@@ -135,13 +123,9 @@ class MagentoCustomer
     }
 
 
-
-
     public static $actions = '//div[@class="right"]//select';
     public static $submit = '//div[@class="right"]//button//span[text()="Submit"]';
     public static $group = '//div[@class="entry-edit"]//select/../..//span[3]//select';
-
-
 
 
     public function checkSubscribe($actions){
@@ -176,5 +160,115 @@ class MagentoCustomer
         $I->see('Total of 1 record(s) were updated.',self::$assertSuccessMsg);
     }
 
-    
+
+
+    // Edit
+
+    public static $createOrder = '//*[@class="form-buttons"]/button//span[text()="Create Order"]';
+
+
+    public function editCustomer(){
+        $I = $this->tester;
+        $I->waitForElement(self::$foundEmail);
+        $I->click(self::$foundEmail);
+        $I->waitForElement(self::$createOrder);
+    }
+
+
+    // Customers Groups
+
+    //add group
+    public static $customerGroup = '//*[@class="nav-bar"]//li//ul//a/span[text()="Customer Groups"]';
+    public static $groupH3 = '//*[@class="content-header"]//h3[text()="Customer Groups"]';
+    public static $addGroup = '//*[@class="content-header"]//td/button';
+    public static $emptyGroup = '//*[@name="code"]/../div[contains(text(),"This")]';
+    public static $max = '//*[@name="code"]/../div[contains(text(),"Text")]';
+    public static $fieldGroup = '//*[@name="code"]';
+    public static $saveGroup = '//*[@class="content-header"]//button//span[text()="Save Customer Group"]';
+
+    //filter
+    public static $foundNewGroup = '//*[@class="grid"]//tbody//tr/td[contains(text(),"Test")]';
+    public static $groupFilter = '//*[@class="filter"]//div/input[@name="type"]';
+    public static $searchGroup = '//*[@class="filter-actions a-right"]//button//span[text()="Search"]';
+    public static $resetGroup = '//*[@class="filter-actions a-right"]//button//span[text()="Reset Filter"]';
+    //edit
+
+    public static $foundNewGroup2 = '//*[@class="grid"]//tbody//tr/td[contains(text(),"Edit")]';
+    // delete
+
+    public static $delete = '//div[@class="content-header"]//button//span[text()="Delete Customer Group"]';
+
+
+
+
+
+
+
+
+
+
+
+
+    public function addGroup(){
+        $I = $this->tester;
+        self::goMagentoCustomer();
+        $I->waitForElement(self::$moveCustomer);
+        $I->moveMouseOver(self::$moveCustomer);
+        $I->waitForElement(self::$customerGroup);
+        $I->click(self::$customerGroup);
+        $I->waitForElement(self::$groupH3);
+        $I->click(self::$addGroup);
+        $I->waitForElement(self::$fieldGroup);
+        $I->click(self::$saveGroup);
+        $I->seeElement(self::$emptyGroup);
+        $I->fillField(self::$fieldGroup, 'Test Group Test Group Test Group Test Group Test Group Test Group');
+        $I->click(self::$saveGroup);
+        $I->seeElement(self::$max);
+        $I->fillField(self::$fieldGroup, 'Test Group');
+        $I->click(self::$saveGroup);
+        $I->waitForElement(self::$assertSuccessMsg);
+        $I->see('The customer group has been saved.' ,self::$assertSuccessMsg);
+        $I->waitForElement(self::$foundNewGroup);
+
+    }
+
+    public function filterGroup()
+    {
+        $I = $this->tester;
+        $I->waitForElement(self::$groupFilter);
+        $I->fillField(self::$groupFilter, 'Test Group');
+        $I->click(self::$searchGroup);
+        try {
+            $I->waitForElementNotVisible(self::$loading, 30);
+        } catch (Exception $e){}
+        $I->waitForElement(self::$foundNewGroup);
+        $I->click(self::$resetGroup);
+        try {
+            $I->waitForElementNotVisible(self::$loading, 30);
+        } catch (Exception $e){}
+    }
+
+    public function editGroup(){
+        $I = $this->tester;
+        $I->waitForElement(self::$foundNewGroup);
+        $I->click(self::$foundNewGroup);
+        $I->waitForElement(self::$fieldGroup);
+        $I->fillField(self::$fieldGroup, 'Test Group Edit');
+        $I->click(self::$saveGroup);
+        $I->waitForElement(self::$assertSuccessMsg);
+        $I->see('The customer group has been saved.' ,self::$assertSuccessMsg);
+        $I->waitForElement(self::$foundNewGroup2);
+        $I->click(self::$foundNewGroup2);
+    }
+
+    public function deleteGroup(){
+        $I = $this->tester;
+        $I->waitForElement(self::$delete);
+        $I->click(self::$delete);
+        $I->acceptPopup();
+        $I->waitForElement(self::$assertSuccessMsg);
+        $I->see('The customer group has been deleted.',self::$assertSuccessMsg);
+    }
+
+
 }
