@@ -48,6 +48,12 @@ class MagentoManageHierarchy
     public static $filterTitleResult = '//*[@class="grid"]//td[3]';
     public static $addPageToTreeButton = '//*[@class="entry-edit-head"]//button';
 
+    //move node
+    public static $testNode = '//*[@id="tree-container"]/ul//ul//a/span[contains(text(),"test")]';
+    public static $all = '//*[@id="tree-container"]/ul//div//img[2]';
+    public static $plusAll = '//*[@id="tree-container"]/ul//div//img[1]';
+
+
     protected $tester;
     public function __construct(\AcceptanceTester $I)
     {
@@ -75,6 +81,17 @@ class MagentoManageHierarchy
         $I->click(self::$saveButton);
         $I->waitForElement(self::$assertSuccessMsg);
         $I->see('The hierarchy has been saved.',self::$assertSuccessMsg);
+    }
+
+    public function moveNode(){
+        $I = $this->tester;
+        $I->waitForElement(self::$testNode);
+        $I->click(self::$testNode);
+        $I->dragAndDrop(self::$testNode, self::$all);
+        $I->waitForElement(self::$plusAll);
+        $I->click(self::$plusAll);
+        $I->waitForElement(self::$testNode);
+
     }
 
     public function editNode11($node) {

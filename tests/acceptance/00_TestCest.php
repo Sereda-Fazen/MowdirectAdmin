@@ -15,14 +15,13 @@ class TestCest
 
     function T766MoveAnExistingNode(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageHierarchy $magentoManageHierarchy) {
 
-        $magentoManageHierarchy->moveNote();
+        $magentoManageHierarchy->moveNode();
     }
 
-    //   function T774EditANode(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageHierarchy $magentoManageHierarchy) {
-    //       $I->loginAdminPanel('testing','Da1mat1an5');
-    //       $magentoManageHierarchy->goToManageHierarchyPage();
-    //       $magentoManageHierarchy->editNode('test-title-node');
-    //    }
+    function T774EditANode(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageHierarchy $magentoManageHierarchy) {
+        
+         $magentoManageHierarchy->editNode('test-title-node');
+       }
 
     function T767DeleteANode(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageHierarchy $magentoManageHierarchy) {
         $magentoManageHierarchy->deleteNodeFromTree('test-title-node');
