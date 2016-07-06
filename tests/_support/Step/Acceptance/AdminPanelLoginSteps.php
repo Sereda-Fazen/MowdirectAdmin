@@ -39,7 +39,6 @@ class AdminPanelLoginSteps extends \AcceptanceTester
             $I->fillField(self::$userNameField, $login);
             $I->fillField(self::$passwordField, $pass);
             $I->click(self::$loginButton);
-            $I->waitForElement(self::$popUpClose);
             try {
                 $I->waitForElement(self::$popUpClose);
                 $I->click(self::$popUpClose);
