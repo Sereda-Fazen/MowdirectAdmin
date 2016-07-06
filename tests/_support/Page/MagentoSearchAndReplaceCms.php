@@ -48,6 +48,17 @@ class MagentoSearchAndReplaceCms
         $I->see('Page Search Result List',self::$assertDataPage);
     }
 
+    public function goToSearchAndReplaceReplacePage() {
+        $I = $this->tester;
+        $I->moveMouseOver(self::$searchAndReplaceDown);
+        $I->waitForElement(self::$searchAndReplaceCmsDown);
+        $I->moveMouseOver(self::$searchAndReplaceCmsDown);
+        $I->waitForElement(self::$searchAndReplaceReplaceInPages);
+        $I->click(self::$searchAndReplaceReplaceInPages);
+        $I->waitForElementVisible(self::$assertDataPage);
+        $I->see('Page Replace',self::$assertDataPage);
+    }
+
 
 
 
@@ -115,6 +126,19 @@ class MagentoSearchAndReplaceCms
         $I->waitForElement(self::$assertSuccessMsg);
     }
 
+    public function massAction1($searchTerm){
+        $I = $this->tester;
+        $I->waitForElementNotVisible(self::$loadPageBlock);
+        $I->click(self::$checkbox1Table);
+        $I->click(self::$actionSearch);
+        $I->click(self::$actionSubmitButton);
+        $I->waitForElement(self::$assertDataPage);
+        $I->see('New Search',self::$assertDataPage);
+        $I->fillField(self::$searchTermField,$searchTerm);
+        $I->click(self::$newSearchContinueButton);
+        $I->waitForElement(self::$assertSuccessMsg);
+    }
+
     public function searchFilter($pageName){
         $I = $this->tester;
         $I->fillField(self::$filterNameField,$pageName);
@@ -124,6 +148,19 @@ class MagentoSearchAndReplaceCms
         $I->see($pageName,self::$resultName);
     }
 
+    public static $filterSearchTerm = '//*[@class="filter"]/th[4]//input';
+    public static $filterReplaceSearchButton = '//*[@class="middle"]//button[2]';
+    public static $resultTerm = '//*[@class="data"]//tr[1]/td[4]';
+
+    public function searchFilterReplacePage($pageName){
+        $I = $this->tester;
+        $I->fillField(self::$filterSearchTerm,$pageName);
+        $I->waitForElementVisible(self::$filterReplaceSearchButton);
+        $I->click(self::$filterReplaceSearchButton);
+        $I->waitForElementVisible(self::$resultTerm);
+        $I->see($pageName,self::$resultTerm);
+    }
+
     public static $actionReplace = '//*[@class="right"]//option[3]';
     public static $replaceFilter = '//*[@id="replaceterm"]';
     public static $continueButton = '//*[@id="content"]//button';
@@ -131,7 +168,7 @@ class MagentoSearchAndReplaceCms
     public function undoReplace($replace){
         $I = $this->tester;
      //   $I->click(self::$checkbox1Table);
-        $I->click('Select Visible');
+        $I->click(self::$checkbox1Table);
         $I->click(self::$actionReplace);
         $I->click(self::$actionSubmitButton);
         $I->waitForElementVisible(self::$assertDataPage);
@@ -141,6 +178,43 @@ class MagentoSearchAndReplaceCms
         $I->waitForElementVisible(self::$assertSuccessMsg);
     }
 
+    public static $delete1Link = '//*[@class="data"]//tr[1]/td[7]//a';
+
+    public function deleteItSelf(){
+        $I = $this->tester;
+        $I->click('Delete');
+        $I->waitForElementVisible(self::$assertSuccessMsg);
+        $I->see('deleted successfully.',self::$assertSuccessMsg);
+    }
+
+    public function undoChangeReplace(){
+        $I = $this->tester;
+        $I->click(self::$checkbox1Table);
+        $I->click(self::$actionReplace);
+        $I->click(self::$actionSubmitButton);
+        $I->acceptPopup();
+        $I->waitForElementVisible(self::$assertSuccessMsg);
+        $I->see('undone',self::$assertSuccessMsg);
+    }
+
+    public static $actionDelete = '//*[@class="right"]//option[2]';
+    public function deleteChangeReplace(){
+        $I = $this->tester;
+        $I->click(self::$checkbox1Table);
+        $I->click(self::$actionDelete);
+        $I->click(self::$actionSubmitButton);
+        $I->acceptPopup();
+        $I->waitForElementVisible(self::$assertSuccessMsg);
+        $I->see('deleted',self::$assertSuccessMsg);
+    }
+
+    public function undoReplaceItself(){
+        $I = $this->tester;
+        $I->click(self::$checkbox1Table);
+        $I->click('Undo replacement');
+        $I->waitForElementVisible(self::$assertSuccessMsg);
+        $I->see('Replacing term was undone.',self::$assertSuccessMsg);
+    }
 
 
 }

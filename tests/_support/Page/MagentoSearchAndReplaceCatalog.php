@@ -302,7 +302,22 @@ class MagentoSearchAndReplaceCatalog
     public function massAction($searchTerm){
         $I = $this->tester;
         $I->waitForElementNotVisible(self::$loadPageBlock);
-        $I->click(self::$checkbox1Table);
+      //  $I->click(self::$checkbox1Table);
+        $I->click('Select All');
+        $I->click(self::$actionSearch);
+        $I->click(self::$actionSubmitButton);
+        $I->waitForElement(self::$assertDataPage);
+        $I->see('New Search',self::$assertDataPage);
+        $I->fillField(self::$searchTermField,$searchTerm);
+        $I->click(self::$newSearchContinueButton);
+        $I->waitForElement(self::$assertSuccessMsg);
+    }
+
+    public function massAction1($searchTerm){
+        $I = $this->tester;
+        $I->waitForElementNotVisible(self::$loadPageBlock);
+          $I->click(self::$checkbox1Table);
+        //$I->click('Select All');
         $I->click(self::$actionSearch);
         $I->click(self::$actionSubmitButton);
         $I->waitForElement(self::$assertDataPage);
@@ -314,6 +329,7 @@ class MagentoSearchAndReplaceCatalog
 
 
     public static $actionReplace = '//*[@class="right"]//option[3]';
+    public static $actionDown = '//*[@class="right"]//select';
     public static $replaceFilter = '//*[@id="replaceterm"]';
     public static $continueButton = '//*[@id="content"]//button';
     public function replaceFunction($replace){
@@ -341,9 +357,14 @@ class MagentoSearchAndReplaceCatalog
 
     }
 
+    public static $actionUndoReplace = '//*[@class="right"]//option[3]';
+
     public function undoReplace(){
         $I = $this->tester;
+        $I->waitForElementNotVisible(self::$loadPageBlock);
+        $I->wait(3);
         $I->click(self::$checkbox1Table);
+        $I->click(self::$actionDown);
         $I->click(self::$actionReplace);
         $I->click(self::$actionSubmitButton);
         $I->acceptPopup();
@@ -356,6 +377,7 @@ class MagentoSearchAndReplaceCatalog
         $I->click(self::$checkbox1Table);
         $I->click(self::$actionDeleteReplace);
         $I->click(self::$actionSubmitButton);
+        $I->wait(3);
         $I->acceptPopup();
         $I->waitForElementVisible(self::$assertSuccessMsg);
     }
