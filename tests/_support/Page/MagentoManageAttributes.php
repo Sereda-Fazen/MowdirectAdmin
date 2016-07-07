@@ -10,6 +10,7 @@ namespace Page;
 use Exception;
 
 
+
 class MagentoManageAttributes
 {
 
@@ -163,14 +164,19 @@ class MagentoManageAttributes
     public static $saveAttributeSetButton = '//*[@class="middle"]//button[2]';
 
     public function addNewSet($attributeSet){
-        $I = $this->tester;
-        $I->click(self::$addNewAttributeButton);
-        $I->waitForElementVisible(self::$assertDataPage);
-        $I->see('Add New Attribute Set',self::$assertDataPage);
-        $I->fillField(self::$attributeSetNameField,$attributeSet);
-        $I->click(self::$saveAttributeSetButton);
-        $I->waitForElement(self::$assertSuccessMsg);
-        $I->see('saved',self::$assertSuccessMsg);
+        try {
+            $I = $this->tester;
+            $I->click(self::$addNewAttributeButton);
+            $I->waitForElementVisible(self::$assertDataPage);
+            $I->see('Add New Attribute Set', self::$assertDataPage);
+            $I->fillField(self::$attributeSetNameField, $attributeSet);
+            $I->click(self::$saveAttributeSetButton);
+            $I->waitForElement(self::$assertSuccessMsg);
+            $I->see('saved', self::$assertSuccessMsg);
+        } catch (Exception $e) {
+            $I->waitForElement(self::$errorMessage);
+            $I->see('name already exists.',self::$errorMessage);
+        }
     }
 
     // attribute set page

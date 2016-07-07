@@ -7,6 +7,7 @@
  */
 
 namespace Page;
+use Exception;
 
 
 class MagentoSearchTerms
@@ -38,18 +39,26 @@ class MagentoSearchTerms
     public static $searchQueryField = '//*[@id="query_text"]';
     public static $storeAgriFabDown = '//*[@id="store_id"]/optgroup[2]/option';
     public static $newSaveSearchButton = '//*[@class="middle"]/div/div[2]//button[3]';
+    public static $errorMessage = '//*[@id="messages"]/ul/li';
+    public static $backButton = '//*[@class="middle"]/div/div[2]//button[1]';
 
     public function addNewSearchTerm($searchQuery){
         $I = $this->tester;
+        try{
         $I->click(self::$addNewSearchTermButton);
         $I->waitForElementVisible(self::$assertDataPage);
         $I->see('New Search',self::$assertDataPage);
         $I->fillField(self::$searchQueryField,$searchQuery);
         $I->click(self::$storeAgriFabDown);
         $I->click(self::$newSaveSearchButton);
-        $I->waitForElementVisible(self::$assertDataPage);
-        $I->see('Search',self::$assertDataPage);
-    }
+        $I->waitForElementVisible('Select All');
+        }catch (Exception $e){
+            $I->waitForElementVisible(self::$errorMessage);
+            $I->click(self::$backButton);
+            $I->waitForElementVisible(self::$assertDataPage);
+            $I->see('Search',self::$assertDataPage);
+        }
+                }
 
     // Filter Fields
     public static $filterSearchQuery = '//*[@class="filter"]/th[2]//input';
