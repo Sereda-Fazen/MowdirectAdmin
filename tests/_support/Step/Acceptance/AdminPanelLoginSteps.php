@@ -49,7 +49,9 @@ class AdminPanelLoginSteps extends \AcceptanceTester
         } catch (Exception $e) {
             $I->waitForElement(self::$dashboard);
         }
+    }
 
-}
+        
+
 
 }

@@ -12,24 +12,21 @@ class TestCest
      * 2. Customers -> Customer Groups
      */
 
-    function T899AddAnInvitation (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoCustomer $manageCategories)
+    function T1106AddANewRule (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoPromotions $manageCategories)
     {
         $I->loginAdminPanel('testing', 'Da1mat1an5');
-        $manageCategories->goMagentoCustomer();
-        $manageCategories->addInvitations();
+        $manageCategories->goMagentoPromotions();
+        $manageCategories->addNewRule();
     }
-    function T900ResentAnInvitation (\Page\MagentoCustomer $manageCategories)
+    function T1107EditRule (\Page\MagentoPromotions $manageCategories)
     {
-        $manageCategories->resentAnInvitation();
-    }
-    function T902ViewAnInvitation (\Page\MagentoCustomer $manageCategories)
-    {
-        $manageCategories->viewAnInvitation();
-    }
-    function T901DiscardAnInvitation (\Page\MagentoCustomer $manageCategories)
-    {
-        $manageCategories->discardAnInvitation();
+        $manageCategories->editRule();
     }
 
+    function T1108DeleteRule (\Page\MagentoPromotions $manageCategories)
+    {
+        $manageCategories->removeRule();
+    }
+   
 }
 

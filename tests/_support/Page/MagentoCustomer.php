@@ -339,4 +339,25 @@ class MagentoCustomer
 
 
 
+    /**
+     * Customers Online
+     */
+
+
+    public static $onlineCustomers = '//*[@class="nav-bar"]//li//ul//a/span[text()="Online Customers"]';
+    public static $onlineCustomersH3 = '//*[@class="content-header"]//h3[text()="Online Customers"]';
+
+
+    public function checkOnlineCustomers(){
+        self::goMagentoCustomer();
+        $I = $this->tester;
+        $I->waitForElement(self::$onlineCustomers);
+        $I->click(self::$onlineCustomers);
+        $I->waitForElement(self::$onlineCustomersH3);
+        
+
+    }
+
+
+
 }

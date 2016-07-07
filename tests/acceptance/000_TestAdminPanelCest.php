@@ -179,5 +179,41 @@ class TestAdminPanelCest
     {
         $manageCategories->discardAnInvitation();
     }
+
+    /**
+     * @param Acceptance\AdminPanelLoginSteps $I
+     * @param \Page\MagentoCustomer $manageCategories
+     * Customers -> Online Customers
+     */
+
+    function T903OnlineCustomers (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoCustomer $manageCategories)
+    {
+        $I->loginAdminPanel('testing', 'Da1mat1an5');
+        $manageCategories->goMagentoCustomer();
+        $manageCategories->checkOnlineCustomers();
+    }
+
+
+    /**
+     * @param Acceptance\AdminPanelLoginSteps $I
+     * @param \Page\MagentoPromotions $manageCategories
+     * Promotions -> Catalog Price Rules
+     */
+
+    function T1106AddANewRule (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoPromotions $manageCategories)
+    {
+        $I->loginAdminPanel('testing', 'Da1mat1an5');
+        $manageCategories->goMagentoPromotions();
+        $manageCategories->addNewRule();
+    }
+    function T1107EditRule (\Page\MagentoPromotions $manageCategories)
+    {
+        $manageCategories->editRule();
+    }
+
+    function T1108DeleteRule (\Page\MagentoPromotions $manageCategories)
+    {
+        $manageCategories->removeRule();
+    }
 }
 
