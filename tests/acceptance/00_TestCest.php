@@ -13,24 +13,15 @@ class TestCest
      * Promotions -> Shopping Basket Price Rules
      */
 
-    function T1110AddANewShoppingRule (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoPromotions $magentoManageAttributes)
+    function T1110AddANewShoppingRule (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoCatalog $magentoCatalog)
     {
         $I->loginAdminPanel('testing', 'Da1mat1an5');
-        $magentoManageAttributes->goMagentoPromotions();
-        $magentoManageAttributes->addNewShoppingRule();
+        $magentoCatalog->goMagentoCatalog();
+        $magentoCatalog->addNewURL();
+        $magentoCatalog->filters();
+
     }
-    function T1109TestFiltersShoppingRule (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoPromotions $magentoManageAttributes)
-    {
-        $magentoManageAttributes->filters();
-    }
-    function T1111EditShoppingRule (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoPromotions $magentoManageAttributes)
-    {
-        $magentoManageAttributes->editShoppingRule();
-    }
-    function T1112DeleteShoppingRule (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoPromotions $magentoManageAttributes)
-    {
-        $magentoManageAttributes->deleteShoppingRule();
-    }
+
    
 }
 
