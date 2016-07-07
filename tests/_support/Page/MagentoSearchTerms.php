@@ -51,7 +51,7 @@ class MagentoSearchTerms
         $I->fillField(self::$searchQueryField,$searchQuery);
         $I->click(self::$storeAgriFabDown);
         $I->click(self::$newSaveSearchButton);
-        $I->waitForElementVisible('Select All');
+        $I->waitForElementVisible(self::$actionSubmitButton);
         }catch (Exception $e){
             $I->waitForElementVisible(self::$errorMessage);
             $I->click(self::$backButton);

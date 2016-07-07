@@ -377,7 +377,7 @@ class MagentoSearchAndReplaceCatalog
         $I->click(self::$checkbox1Table);
         $I->click(self::$actionDeleteReplace);
         $I->click(self::$actionSubmitButton);
-        $I->wait(3);
+        $I->seeInPopup('Are');
         $I->acceptPopup();
         $I->waitForElementVisible(self::$assertSuccessMsg);
     }

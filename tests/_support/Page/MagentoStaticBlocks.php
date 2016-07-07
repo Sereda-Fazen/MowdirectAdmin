@@ -49,8 +49,11 @@ class MagentoStaticBlocks
         $I->see('Static Blocks',self::$assertStaticBlocksPage);
     }
 
+    public static $errorMessage = '//*[@id="messages"]/ul/li';
+
     public function createNewStaticBlock($title,$identifier,$content) {
         $I = $this->tester;
+        try{
         $I ->click(self::$addNewBlockButton);
         $I->waitForElement(self::$assertStaticBlocksPage);
         $I->see('New Block',self::$assertStaticBlocksPage);
@@ -61,10 +64,14 @@ class MagentoStaticBlocks
         $I ->click(self::$saveBlockButton);
         $I->waitForElement(self::$assertSuccessMsg);
         $I->see('The block has been saved.',self::$assertSuccessMsg);
+        }catch (Exception $e) {
+            $I->waitForElementVisible(self::$errorMessage);
+        }
     }
 
     public function editStaticBlock($title,$title1) {
         $I = $this->tester;
+
         $I->fillField(self::$filterTitleField,$title);
         $I->click(self::$filterSearchButton);
         $I->waitForElementVisible(self::$filterTitleTable);
@@ -77,6 +84,7 @@ class MagentoStaticBlocks
         $I ->click(self::$saveEditBlockButton);
         $I->waitForElement(self::$assertSuccessMsg);
         $I->see('The block has been saved.',self::$assertSuccessMsg);
+
     }
 
     public function deleteStaticBlock($title) {
