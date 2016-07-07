@@ -153,5 +153,31 @@ class TestAdminPanelCest
     {
         $manageCategories->deleteGroup();
     }
+
+    /**
+     * @param Acceptance\AdminPanelLoginSteps $I
+     * @param \Page\MagentoCustomer $manageCategories
+     * Customers -> Invitations
+     */
+
+
+    function T899AddAnInvitation (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoCustomer $manageCategories)
+    {
+        $I->loginAdminPanel('testing', 'Da1mat1an5');
+        $manageCategories->goMagentoCustomer();
+        $manageCategories->addInvitations();
+    }
+    function T900ResentAnInvitation (\Page\MagentoCustomer $manageCategories)
+    {
+        $manageCategories->resentAnInvitation();
+    }
+    function T902ViewAnInvitation (\Page\MagentoCustomer $manageCategories)
+    {
+        $manageCategories->viewAnInvitation();
+    }
+    function T901DiscardAnInvitation (\Page\MagentoCustomer $manageCategories)
+    {
+        $manageCategories->discardAnInvitation();
+    }
 }
 

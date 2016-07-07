@@ -271,9 +271,15 @@ class MagentoCustomer
     public static $saveInvitation = '//*[@class="content-header"]//button//span[text()="Save"]';
     public static $emptyEmailInvitation = '//*[@name="email"]/../div[contains(text(),"This")]';
     public static $fieldEmail = '//*[@name="email"]';
+    public static $searchEmail = '//input[@name="email"]';
+    public static $view = '//*[@class="content-header"]//h3[contains(text(),"View")]';
+    public static $statusHistory = '//*[@class="columns "]//li//span[text()="Status History"]';
+    public static $sent = '//*[@class="note-list"]/li//strong[text()="Sent"]/../../li/strong[text()="Not Sent"]';
+    public static $back = '//*[@class="content-header"]//button/span//span[text()="Back"]';
 
     public static $foundEmailInvitations = '//*[@class="grid"]//tbody//tr/td[contains(text(),"test_mowdirect@yahho.co.uk")]';
     public static $emailInvitation = '//*[@class="grid"]//tbody//tr/td[contains(text(),"test_mowdirect@yahho.co.uk")]/../td[contains(text(),"Sent")]/../td/input';
+    public static $emailInvitation1 = '//*[@class="grid"]//tbody//tr/td[contains(text(),"test_mowdirect@yahho.co.uk")]/../td[contains(text(),"Sent")]';
     public static $error = '//div[@id="messages"]';
     public static $discardedInvitation = '//*[@class="grid"]//tbody//tr/td[contains(text(),"test_mowdirect@yahho.co.uk")]/../td[contains(text(),"Discarded")]/../td/input';
 
@@ -297,6 +303,9 @@ class MagentoCustomer
     }
     public function resentAnInvitation(){
         $I = $this->tester;
+        $I->waitForElement(self::$searchEmail);
+        $I->fillField(self::$searchEmail, 'test_mowdirect');
+        $I->click(static::$searchGroup);
         $I->waitForElement(self::$emailInvitation);
         $I->click(self::$emailInvitation);
         $I->selectOption(static::$actions, 'Send Selected');
@@ -304,7 +313,16 @@ class MagentoCustomer
         $I->waitForElement(self::$error);
         $I->see('No invitations have been resent',self::$error);
     }
-
+    public function viewAnInvitation(){
+        $I = $this->tester;
+        $I->waitForElement(self::$emailInvitation1);
+        $I->click(self::$emailInvitation1);
+        $I->waitForElement(self::$view);
+        $I->click(self::$statusHistory);
+        $I->waitForElement(self::$sent);
+        $I->click(self::$back);
+    }
+    
     public function discardAnInvitation(){
         $I = $this->tester;
         $I->waitForElement(self::$emailInvitation);
