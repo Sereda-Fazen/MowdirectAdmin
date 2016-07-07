@@ -106,12 +106,35 @@ class MagentoPromotions
         $I->waitForElementNotVisible(self::$showEditRule);
     }
 
+    /**
+     * Shopping Basket Price Rules
+     */
+
+    public static $shoppingBasketPriceRules = '//*[@class="nav-bar"]//li//ul//a/span[text()="Shopping Basket Price Rules"]';
+    public static $shoppingH3 = '//*[@class="content-header"]//h3[text()="Shopping Basket Price Rules"]';
 
 
+    public function addNewShoppingRule(){
+        $I = $this->tester;
+        self::goMagentoPromotions();
+        $I->waitForElement(self::$shoppingBasketPriceRules);
+        $I->click(self::$shoppingBasketPriceRules);
+        $I->waitForElement(self::$shoppingH3);
+        $I->click(static::$addRule);
+        $I->waitForElement(static::$save);
+        $I->click(static::$save);
+        $I->seeElement(static::$emptyName);
+        $I->seeElement(static::$doesNotSelectWebSite);
+        $I->seeElement(static::$doesNotSelectGroup);
+        $I->seeElement(static::$ruleError);
+        $I->fillField(static::$name, 'Test Shopping Rule');
+        $I->selectOption(static::$selectWebSite, 'Main Website');
+        $I->selectOption(static::$selectGroup,'General');
+        $I->click(static::$save);
+        $I->waitForElement(static::$assertSuccessMsg);
+        $I->see('The rule has been saved.',static::$assertSuccessMsg);
+        $I->waitForElement(static::$showRule);
 
 
-
-
-
-
+    }
 }

@@ -209,7 +209,7 @@ class MagentoManageAttributes
     public static $deleteSetButton = '//*[@class="middle"]//button[3]';
     public static $groupTable = '//*[@class="middle"]/div/table/tbody/tr/td[2]/div[2]/ul/div';
 
- /*   public function addGroup($testGroup){
+   public function addGroup($testGroup){
         $I = $this->tester;
         $I->click(self::$setNameResult);
         $I->waitForElementVisible(self::$assertDataPage);
@@ -219,7 +219,7 @@ class MagentoManageAttributes
         $I->typeInPopup($testGroup);
         $I->wait(3);
     }
-*/
+
     public function deleteSetAttribute(){
         $I = $this->tester;
         $I->click(self::$setNameResult);
