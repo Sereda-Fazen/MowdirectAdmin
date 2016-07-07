@@ -176,7 +176,7 @@ class MagentoManageAttributes
         } catch (Exception $e) {
             $I->waitForElement(self::$errorMessage);
             $I->see('name already exists.',self::$errorMessage);
-        }
+                    }
     }
 
     // attribute set page
@@ -215,9 +215,9 @@ class MagentoManageAttributes
         $I->waitForElementVisible(self::$assertDataPage);
         $I->see('Edit Attribute Set',self::$assertDataPage);
         $I->click(self::$addNewGroupButton);
-        $I->wait(3);
         $I->typeInPopup($testGroup);
-        $I->wait(3);
+        $I->acceptPopup();
+        $I->click(self::$saveAttributeSetButton);
     }
 
     public function deleteSetAttribute(){

@@ -59,6 +59,39 @@ class MagentoSearchAndReplaceCms
         $I->see('Page Replace',self::$assertDataPage);
     }
 
+    public function goToSearchAndSelectStaticBlock() {
+        $I = $this->tester;
+        $I->moveMouseOver(self::$searchAndReplaceDown);
+        $I->waitForElement(self::$searchAndReplaceCmsDown);
+        $I->moveMouseOver(self::$searchAndReplaceCmsDown);
+        $I->waitForElement(self::$searchAndReplaceSelectStaticBlock);
+        $I->click(self::$searchAndReplaceSelectStaticBlock);
+        $I->waitForElementVisible(self::$assertDataPage);
+        $I->see('Search and Replace CMS',self::$assertDataPage);
+    }
+
+    public function goToSearchAndSearchStaticBlock() {
+        $I = $this->tester;
+        $I->moveMouseOver(self::$searchAndReplaceDown);
+        $I->waitForElement(self::$searchAndReplaceCmsDown);
+        $I->moveMouseOver(self::$searchAndReplaceCmsDown);
+        $I->waitForElement(self::$searchAndReplaceSearchStaticBlocks);
+        $I->click(self::$searchAndReplaceSearchStaticBlocks);
+        $I->waitForElementVisible(self::$assertDataPage);
+        $I->see('Static Block Search',self::$assertDataPage);
+    }
+
+    public function goToSearchAndReplaceStaticBlocks() {
+        $I = $this->tester;
+        $I->moveMouseOver(self::$searchAndReplaceDown);
+        $I->waitForElement(self::$searchAndReplaceCmsDown);
+        $I->moveMouseOver(self::$searchAndReplaceCmsDown);
+        $I->waitForElement(self::$searchAndReplaceReplaceStaticBlocks);
+        $I->click(self::$searchAndReplaceReplaceStaticBlocks);
+        $I->waitForElementVisible(self::$assertDataPage);
+        $I->see('Static Block Replace',self::$assertDataPage);
+    }
+
 
 
 
@@ -167,7 +200,6 @@ class MagentoSearchAndReplaceCms
 
     public function undoReplace($replace){
         $I = $this->tester;
-     //   $I->click(self::$checkbox1Table);
         $I->click(self::$checkbox1Table);
         $I->click(self::$actionReplace);
         $I->click(self::$actionSubmitButton);
@@ -176,7 +208,10 @@ class MagentoSearchAndReplaceCms
         $I->fillField(self::$replaceFilter,$replace);
         $I->click(self::$continueButton);
         $I->waitForElementVisible(self::$assertSuccessMsg);
+
     }
+
+
 
     public static $delete1Link = '//*[@class="data"]//tr[1]/td[7]//a';
 
@@ -215,6 +250,41 @@ class MagentoSearchAndReplaceCms
         $I->waitForElementVisible(self::$assertSuccessMsg);
         $I->see('Replacing term was undone.',self::$assertSuccessMsg);
     }
+
+//// filters
+
+    public static $storeView = '//*[@class="filter"]/th[4]//optgroup[4]/option';
+    public static $resultStoreView = '//*[@class="data"]//tbody//td[4]';
+    public static $statusDisable = '//*[@class="filter"]/th[5]//option[2]';
+    public static $statusEnable = '//*[@class="filter"]/th[5]//option[3]';
+    public static $resultStatus = '//*[@class="data"]//tbody//td[5]';
+
+    public function variousView(){
+        $I = $this->tester;
+        $I->click(self::$storeView);
+        $I->click(self::$filterSearchButton);
+        $I->waitForElementNotVisible(self::$loadPageBlock);
+        $I->waitForElementVisible(self::$resultStoreView);
+        $I->click(self::$statusEnable);
+        $I->click(self::$filterSearchButton);
+        $I->waitForElementNotVisible(self::$loadPageBlock);
+        $I->waitForElementVisible(self::$resultStatus);
+        $I->click(self::$filterResetFilterButton);
+        $I->waitForElementNotVisible(self::$loadPageBlock);
+            }
+
+
+    public function searchActionMassActionMenu($searchTerm){
+        $I = $this->tester;
+        $I->click('Select All');
+        $I->click(self::$actionSearch);
+        $I->click(self::$actionSubmitButton);
+        $I->waitForElementVisible(self::$searchTermField);
+        $I->fillField(self::$searchTermField, $searchTerm);
+        $I->click(self::$continueButton);
+        $I->waitForElement(self::$assertSuccessMsg);
+    }
+
 
 
 }

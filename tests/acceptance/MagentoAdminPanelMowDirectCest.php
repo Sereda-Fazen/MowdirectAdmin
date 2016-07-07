@@ -15,55 +15,46 @@ class MagentoAdminPanelMowDirectCest
         }
 
 
+*/
+/**/
+    function T762CreateANewVersionControlledPageAndSaveIt(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageContent $manageContent) {
+        $I->loginAdminPanel('testing','Da1mat1an5');
+        $manageContent->goToManagePage();
+        $manageContent->createNewControlledPage('test-title','test-url','Test Heading','this is the test message');    }
 
+    function T763CreateANewNonVersionControlledPageAndSaveIt(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageContent $manageContent) {
+        $I->loginAdminPanel('testing','Da1mat1an5');
+        $manageContent->goToManagePage();
+        $manageContent->createNewNonVersionControlledPage('test-non-title','test-non-url','Test Heading non-version','this is the test message for non-version page');}
 
-            function T762CreateANewVersionControlledPageAndSaveIt(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageContent $manageContent) {
-                $I->loginAdminPanel('testing','Da1mat1an5');
-                $manageContent->goToManagePage();
-                $manageContent->createNewControlledPage('test-title','test-url','Test Heading','this is the test message');
-            }
+    function T760MakeAChangeToAnNonVersionControlledExistingPageAndSaveIt(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageContent $manageContent) {
+        $I->loginAdminPanel('testing','Da1mat1an5');
+        $manageContent->goToManagePage();
+        $manageContent->searchPage('test-non-url');
+        $manageContent->changeNonVersionPage('test-non-title-1','test-non-url-1');
+        $manageContent->searchPage('test-non-url-1');            }
 
-                function T763CreateANewNonVersionControlledPageAndSaveIt(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageContent $manageContent) {
-                    $I->loginAdminPanel('testing','Da1mat1an5');
-                    $manageContent->goToManagePage();
-                    $manageContent->createNewNonVersionControlledPage('test-non-title','test-non-url','Test Heading non-version','this is the test message for non-version page');
-                }
+    function T761MakeAChangeToAAnVersionControlledExistingPageAndSaveIt(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageContent $manageContent) {
+        $I->loginAdminPanel('testing','Da1mat1an5');
+        $manageContent->goToManagePage();
+        $manageContent->searchPage('test-url');
+        $manageContent->changeNonVersionPage('test-title-1','test-url-1');
+        $manageContent->searchPage('test-url-1');            }
 
-                function T760MakeAChangeToAnNonVersionControlledExistingPageAndSaveIt(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageContent $manageContent) {
-                    $I->loginAdminPanel('testing','Da1mat1an5');
-                    $manageContent->goToManagePage();
-                    $manageContent->searchPage('test-non-url');
-                    $manageContent->changeNonVersionPage('test-non-title-1','test-non-url-1');
-                    $manageContent->searchPage('test-non-url-1');
-                    }
+    function T812CheckChangeShowOnFrontEnd( \Page\MagentoManageContent $manageContent) {
+        $manageContent->checkControlledVersionPage();
+        $manageContent->checkNonControlledVersionPage();}
 
-                    function T761MakeAChangeToAAnVersionControlledExistingPageAndSaveIt(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageContent $manageContent) {
-                        $I->loginAdminPanel('testing','Da1mat1an5');
-                        $manageContent->goToManagePage();
-                        $manageContent->searchPage('test-url');
-                        $manageContent->changeNonVersionPage('test-title-1','test-url-1');
-                        $manageContent->searchPage('test-url-1');
-                    }
+    function T764TestTheVariousFilteredSearches(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageContent $manageContent) {
+        $I->loginAdminPanel('testing','Da1mat1an5');
+        $manageContent->goToManagePage();
+        $manageContent->searchFilter('test-url-1','test-non-title-1');                }
 
-                        function T812CheckChangeShowOnFrontEnd( \Page\MagentoManageContent $manageContent) {
-                            $manageContent->checkControlledVersionPage();
-                            $manageContent->checkNonControlledVersionPage();
-                        }
-
-                        function T764TestTheVariousFilteredSearches(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageContent $manageContent) {
-                            $I->loginAdminPanel('testing','Da1mat1an5');
-                            $manageContent->goToManagePage();
-                            $manageContent->searchFilter('test-url-1','test-non-title-1');
-                        }
-
-
-                   //// 2.CMS > Pages > Manage Hierarchy
-
-                           function T765CreateANewNode(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageHierarchy $magentoManageHierarchy) {
-                               $I->loginAdminPanel('testing','Da1mat1an5');
-                               $magentoManageHierarchy->goToManageHierarchyPage();
-                               $magentoManageHierarchy->createNode('test-title-node','test-url-node');
-                           }
+//// 2.CMS > Pages > Manage Hierarchy
+    function T765CreateANewNode(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageHierarchy $magentoManageHierarchy) {
+        $I->loginAdminPanel('testing','Da1mat1an5');
+        $magentoManageHierarchy->goToManageHierarchyPage();
+        $magentoManageHierarchy->createNode('test-title-node','test-url-node');}
 
                         //   function T774EditANode(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageHierarchy $magentoManageHierarchy) {
                         //       $I->loginAdminPanel('testing','Da1mat1an5');
@@ -74,52 +65,44 @@ class MagentoAdminPanelMowDirectCest
       function T767DeleteANode(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageHierarchy $magentoManageHierarchy) {
            $I->loginAdminPanel('testing','Da1mat1an5');
            $magentoManageHierarchy->goToManageHierarchyPage();
-           $magentoManageHierarchy->deleteNodeFromTree('test-title-node');
-       }
+           $magentoManageHierarchy->deleteNodeFromTree('test-title-node'); }
 
        function T768AddAPageToTheTree(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageHierarchy $magentoManageHierarchy) {
            $I->loginAdminPanel('testing','Da1mat1an5');
            $magentoManageHierarchy->goToManageHierarchyPage();
-           $magentoManageHierarchy->addPageToTree1('test-title-1');
-       }
+           $magentoManageHierarchy->addPageToTree1('test-title-1');}
 
        function T769RemoveAPageFromTheTree(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageHierarchy $magentoManageHierarchy) {
            $I->loginAdminPanel('testing','Da1mat1an5');
            $magentoManageHierarchy->goToManageHierarchyPage();
-           $magentoManageHierarchy->deletePageFromTree('test-title-1');
-       }
+           $magentoManageHierarchy->deletePageFromTree('test-title-1');}
 
 //// 2.1 Test for child scope
        function T771DeleteCurrentHierarchy(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageHierarchy $magentoManageHierarchy) {
        $I->loginAdminPanel('testing','Da1mat1an5');
            $magentoManageHierarchy->goToManageHierarchyPage();
-           $magentoManageHierarchy->deleteCurrentHierarchy();
-       }
+           $magentoManageHierarchy->deleteCurrentHierarchy();}
 
        function T772CreateANewNode(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageHierarchy $magentoManageHierarchy) {
            $I->loginAdminPanel('testing','Da1mat1an5');
            $magentoManageHierarchy->goToManageHierarchyPage();
-           $magentoManageHierarchy->createNode('test-title-node-1','test-url-node-1');
-       }
+           $magentoManageHierarchy->createNode('test-title-node-1','test-url-node-1');}
 
        function T773EditANode(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageHierarchy $magentoManageHierarchy) {
            $I->loginAdminPanel('testing','Da1mat1an5');
            $magentoManageHierarchy->goToManageHierarchyPage();
-           $magentoManageHierarchy->editNode('test-title-node-1');
-       }
+           $magentoManageHierarchy->editNode('test-title-node-1');}
 
        function T775AddAPageToTheTree(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageHierarchy $magentoManageHierarchy) {
            $I->loginAdminPanel('testing','Da1mat1an5');
            $magentoManageHierarchy->goToManageHierarchyPage();
-           $magentoManageHierarchy->addPageToTree1('test-non-title-1');
-       }
+           $magentoManageHierarchy->addPageToTree1('test-non-title-1');}
 
        function T776RemoveAPageFromTheTree(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageHierarchy $magentoManageHierarchy) {
            $I->loginAdminPanel('testing','Da1mat1an5');
            $magentoManageHierarchy->goToManageHierarchyPage();
            $magentoManageHierarchy->deletePageFromTree('test-non-title-1');
-           $magentoManageHierarchy->deleteNodeFromTree('test-title-node-1');
-       }
+           $magentoManageHierarchy->deleteNodeFromTree('test-title-node-1');}
 
 
 
@@ -127,20 +110,17 @@ class MagentoAdminPanelMowDirectCest
         function T780CreateAPronavItem(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoProNav $magentoProNav) {
             $I->loginAdminPanel('testing','Da1mat1an5');
             $magentoProNav->goToProNavItemsManagerPage();
-            $magentoProNav->createProNavItem('testPronav','12');
-            }
+            $magentoProNav->createProNavItem('testPronav','12');}
 
         function T782DeleteAPronavItem(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoProNav $magentoProNav) {
             $I->loginAdminPanel('testing','Da1mat1an5');
             $magentoProNav->goToProNavItemsManagerPage();
-            $magentoProNav->deleteProNavItem('testPronav');
-            }
+            $magentoProNav->deleteProNavItem('testPronav');}
 
         function T777TestTheVariousFilters(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoProNav $magentoProNav) {
             $I->loginAdminPanel('testing','Da1mat1an5');
             $magentoProNav->goToProNavItemsManagerPage();
-            $magentoProNav->variosFilter('Lawn');
-            }
+            $magentoProNav->variosFilter('Lawn'); }
 
         function T779CreateAPronavItemAndThenUseTheActionsMenuToChangeItsStatus(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoProNav $magentoProNav) {
             $I->loginAdminPanel('testing','Da1mat1an5');
@@ -148,74 +128,58 @@ class MagentoAdminPanelMowDirectCest
             $magentoProNav->createProNavItem('testPronav','12');
             //  $magentoProNav->createProNavItem1('testPronav','testUrl','12','12','12','12','12');
             $magentoProNav->searchPronav('testPronav');
-            $magentoProNav->changeItemStatusOnActionMenu('testPronav');
-            }
-
+            $magentoProNav->changeItemStatusOnActionMenu('testPronav'); }
 
         function T778CreateAPronavItemAndThenUseTheActionsMenutoDeleteIt(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoProNav $magentoProNav) {
             $I->loginAdminPanel('testing','Da1mat1an5');
             $magentoProNav->goToProNavItemsManagerPage();
             //  $magentoProNav->createProNavItem('testPronav','12');
             $magentoProNav->searchPronav('testPronav');
-            $magentoProNav->deleteProNavItemActionMenu('testPronav');
-            }
-
-
+            $magentoProNav->deleteProNavItemActionMenu('testPronav');}
 
 
 //// 4 CMS > Static Blocks
-
           function T784AddANewBlock(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoStaticBlocks $magentoStaticBlocks) {
               $I->loginAdminPanel('testing','Da1mat1an5');
               $magentoStaticBlocks->goToStaticBlocksPage();
-              $magentoStaticBlocks->createNewStaticBlock('Test Block','test_block','Test Content');
-              }
+              $magentoStaticBlocks->createNewStaticBlock('Test Block','test_block','Test Content');              }
 
           function T786EditABlock(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoStaticBlocks $magentoStaticBlocks) {
               $I->loginAdminPanel('testing','Da1mat1an5');
               $magentoStaticBlocks->goToStaticBlocksPage();
-              $magentoStaticBlocks->editStaticBlock('Test Block','Test Block1');
-              }
+              $magentoStaticBlocks->editStaticBlock('Test Block','Test Block1');              }
 
           function T787DeleteABlock(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoStaticBlocks $magentoStaticBlocks) {
               $I->loginAdminPanel('testing','Da1mat1an5');
               $magentoStaticBlocks->goToStaticBlocksPage();
-              $magentoStaticBlocks->deleteStaticBlock('Test Block1');
-              }
+              $magentoStaticBlocks->deleteStaticBlock('Test Block1');              }
 
           function T783TestTheVariousFilters(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoStaticBlocks $magentoStaticBlocks) {
               $I->loginAdminPanel('testing','Da1mat1an5');
               $magentoStaticBlocks->goToStaticBlocksPage();
-              $magentoStaticBlocks->variousFilter('17/06/2010','17/06/2014','17/06/2011','17/06/2016');
-              }
+              $magentoStaticBlocks->variousFilter('17/06/2010','17/06/2014','17/06/2011','17/06/2016');              }
 
 
 //// 5. CMS > Banner
-
-
           function T790AddANewBanner(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoBanners $magentoBanners) {
               $I->loginAdminPanel('testing','Da1mat1an5');
               $magentoBanners->goToStaticBannersPage();
-              $magentoBanners->createNewBanner('Test Banner','Test Content');
-              }
+              $magentoBanners->createNewBanner('Test Banner','Test Content');              }
 
           function T791EditABanner(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoBanners $magentoBanners) {
               $I->loginAdminPanel('testing','Da1mat1an5');
               $magentoBanners->goToStaticBannersPage();
-              $magentoBanners->editStaticBlock('Test Banner','Test Banner1');
-              }
+              $magentoBanners->editStaticBlock('Test Banner','Test Banner1');              }
 
           function T793DeleteABannerFromTheBannerEditPage(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoBanners $magentoBanners) {
               $I->loginAdminPanel('testing','Da1mat1an5');
               $magentoBanners->goToStaticBannersPage();
-              $magentoBanners->deleteStaticBlock('Test Banner1');
-              }
+              $magentoBanners->deleteStaticBlock('Test Banner1');              }
 
           function T788TestTheVariousFilters(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoBanners $magentoBanners) {
               $I->loginAdminPanel('testing','Da1mat1an5');
               $magentoBanners->goToStaticBannersPage();
-              $magentoBanners->variousFilter('MowHow','10','400');
-              }
+              $magentoBanners->variousFilter('MowHow','10','400');              }
 //!!!BUG
 //  function T789AddANewBlockAndThenDeleteItFromTheActionsMenu(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoBanners $magentoBanners) {
 //      $I->loginAdminPanel('testing','Da1mat1an5');
@@ -232,69 +196,54 @@ class MagentoAdminPanelMowDirectCest
     function T794TestTheVariousFilters(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoDataFeedManager $magentoDataFeedManager) {
         $I->loginAdminPanel('testing','Da1mat1an5');
         $magentoDataFeedManager->goToDataFeedManagerPage();
-        $magentoDataFeedManager->variousFilter('20/06/2011','20/06/2017');
-        }
-
+        $magentoDataFeedManager->variousFilter('20/06/2011','20/06/2017');        }
 
     function T795HitAddFeedButton(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoDataFeedManager $magentoDataFeedManager) {
         $I->loginAdminPanel('testing','Da1mat1an5');
         $magentoDataFeedManager->goToDataFeedManagerPage();
-        $magentoDataFeedManager->checkAddFeedButton();
-        }
-
+        $magentoDataFeedManager->checkAddFeedButton();        }
 
     function T797T802EditADataFeed(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoDataFeedManager $magentoDataFeedManager) {
         $I->loginAdminPanel('testing','Da1mat1an5');
         $magentoDataFeedManager->goToDataFeedManagerPage();
-        $magentoDataFeedManager->editDataFeed('amazonAds');
-        }
+        $magentoDataFeedManager->editDataFeed('amazonAds');        }
 
     function T805HitBackButton(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoDataFeedManager $magentoDataFeedManager) {
         $I->loginAdminPanel('testing','Da1mat1an5');
         $magentoDataFeedManager->goToDataFeedManagerPage();
-        $magentoDataFeedManager->checkBackEditPage();
-        }
+        $magentoDataFeedManager->checkBackEditPage();        }
 
 
 // 7. Customer > Customer Segments
-
-
     function T806TestTheVariousFilters(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoCustomerSegments $magentoCustomerSegments) {
         $I->loginAdminPanel('testing','Da1mat1an5');
         $magentoCustomerSegments->goToManageSegmentsPage();
-        $magentoCustomerSegments->variousFilter('1');
-        }
+        $magentoCustomerSegments->variousFilter('1');        }
 
     function T807AddANewCustomerSegments(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoCustomerSegments $magentoCustomerSegments) {
         $I->loginAdminPanel('testing','Da1mat1an5');
         $magentoCustomerSegments->goToManageSegmentsPage();
-        $magentoCustomerSegments->createNewSegment('Test Segment','Test Description');
-        }
+        $magentoCustomerSegments->createNewSegment('Test Segment','Test Description');        }
 
     function T808EditACustomerSegment(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoCustomerSegments $magentoCustomerSegments) {
         $I->loginAdminPanel('testing','Da1mat1an5');
         $magentoCustomerSegments->goToManageSegmentsPage();
         $magentoCustomerSegments->searchSegment('Test Segment');
-        $magentoCustomerSegments->editSegment('Test Description2');
-        }
+        $magentoCustomerSegments->editSegment('Test Description2');        }
 
     function T809DeleteACustomerSegment(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoCustomerSegments $magentoCustomerSegments) {
         $I->loginAdminPanel('testing','Da1mat1an5');
         $magentoCustomerSegments->goToManageSegmentsPage();
         $magentoCustomerSegments->searchSegment('Test Segment');
-        $magentoCustomerSegments->deleteSegment();
-        }
+        $magentoCustomerSegments->deleteSegment();        }
 
 
 
  // 8. Newsletters > Mailchimp > Bulk Synch > Export
-
-
     function T811RunAnExportAndSeeThatItWorks(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoNewsletters $magentoNewsletters) {
         $I->loginAdminPanel('testing','Da1mat1an5');
         $magentoNewsletters->goToExportNewsletter();
-        $magentoNewsletters->runExport();
-        }
+        $magentoNewsletters->runExport();        }
 
 
 ///////////////////////////////////         R:21 CONTENT EDITING          //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -338,41 +287,34 @@ class MagentoAdminPanelMowDirectCest
         //   $manageProducts->searchName('simple test attribute product1');
         }
 
-        function T828EditAProduct(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageProducts $manageProducts){
-            $I->loginAdminPanel('testing', 'Da1mat1an5');
-            $manageProducts->goToManageProductsPage();
-            $manageProducts->searchName('simple test product');
-            $manageProducts->editAProduct('Test-SKU-33333 ', '3');
-        }
+    function T828EditAProduct(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageProducts $manageProducts){
+        $I->loginAdminPanel('testing', 'Da1mat1an5');
+        $manageProducts->goToManageProductsPage();
+        $manageProducts->searchName('simple test product');
+        $manageProducts->editAProduct('Test-SKU-33333 ', '3');        }
 
-        function T831ResetAfterAnEdit(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageProducts $manageProducts){
-            $I->loginAdminPanel('testing', 'Da1mat1an5');
-            $manageProducts->goToManageProductsPage();
-            $manageProducts->searchName('simple test product');
-            $manageProducts->resetUpdates('TEST123123123', 'simple test product');
-        }
+    function T831ResetAfterAnEdit(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageProducts $manageProducts){
+        $I->loginAdminPanel('testing', 'Da1mat1an5');
+        $manageProducts->goToManageProductsPage();
+        $manageProducts->searchName('simple test product');
+        $manageProducts->resetUpdates('TEST123123123', 'simple test product');        }
 
-        function T830CreateAnAttribute(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageProducts $manageProducts){
-            $I->loginAdminPanel('testing', 'Da1mat1an5');
-            $manageProducts->goToManageProductsPage();
-            $manageProducts->searchName('simple test attribute product1');
-            $manageProducts->createAnAttribute();
-        }
+    function T830CreateAnAttribute(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageProducts $manageProducts){
+        $I->loginAdminPanel('testing', 'Da1mat1an5');
+        $manageProducts->goToManageProductsPage();
+        $manageProducts->searchName('simple test attribute product1');
+        $manageProducts->createAnAttribute();        }
 
-        function T829DuplicateAProduct(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageProducts $manageProducts){
-            $I->loginAdminPanel('testing', 'Da1mat1an5');
-            $manageProducts->goToManageProductsPage();
-            $manageProducts->searchName('simple test product');
-            $manageProducts->duplicate();
+    function T829DuplicateAProduct(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageProducts $manageProducts){
+        $I->loginAdminPanel('testing', 'Da1mat1an5');
+        $manageProducts->goToManageProductsPage();
+        $manageProducts->searchName('simple test product');
+        $manageProducts->duplicate();
             //$manageProducts->searchName('simple test product');
         }
 
 
-
-
 //// 2. Catalog > Manage Categories
-
-
     function T832AddACategory(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageCategories $manageCategories) {
         $I->loginAdminPanel('testing','Da1mat1an5');
         $manageCategories->goToManageCategory();
@@ -391,8 +333,6 @@ class MagentoAdminPanelMowDirectCest
 
 ////3. Catalog > Attributes
 //3.1. Manage Attributes
-
-
     function T840TestTheVariousFilters(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageAttributes $manageAttributes) {
         $I->loginAdminPanel('testing','Da1mat1an5');
         $manageAttributes->goToManageAttributes();
@@ -416,7 +356,6 @@ class MagentoAdminPanelMowDirectCest
         $manageAttributes->deleteAttribute();}
 
 //3.2. Manage Attribute Sets
-
     function T845AddANewAttributeSet(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageAttributes $manageAttributes) {
         $I->loginAdminPanel('testing','Da1mat1an5');
         $manageAttributes->goToManageAttributesSet();
@@ -428,6 +367,13 @@ class MagentoAdminPanelMowDirectCest
         $manageAttributes->filterTests('test_attribute_set');}
 
 //3.2.1. Edit an Attribute Set
+
+    function T846AddAGroup(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageAttributes $manageAttributes) {
+        $I->loginAdminPanel('testing','Da1mat1an5');
+        $manageAttributes->goToManageAttributesSet();
+        $manageAttributes->search('test_attribute_set');
+        $manageAttributes->addGroup('test123123');}
+
 
     function T848DeleteAGroup(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageAttributes $manageAttributes) {
         $I->loginAdminPanel('testing','Da1mat1an5');
@@ -446,12 +392,12 @@ class MagentoAdminPanelMowDirectCest
         $manageAttributes->goToManageAttributesSet();
         $manageAttributes->search('test_attribute_set');
         $manageAttributes->deleteSetAttribute();}
+
 //3.3. Manage AW Layered Navigation Configuration
 //3.4. Manage AW Layered Navigation Filters
 
 
 //4. Catalog > Search Terms
-
     function T853AddASearchTerm(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoSearchTerms $searchTerms) {
         $I->loginAdminPanel('testing','Da1mat1an5');
         $searchTerms->goToSearchTerms();
@@ -478,9 +424,6 @@ class MagentoAdminPanelMowDirectCest
 //5.1. Customer Reviews
 //5.1.1. Pending Reviews
 //5.1.1.1. Grid View
-
-
-
     function T855TestVariousFilters(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoReviewsAndRatings $reviewsAndRatings) {
         $I->loginAdminPanel('testing','Da1mat1an5');
         $reviewsAndRatings->goToPendingReviews();
@@ -492,7 +435,6 @@ class MagentoAdminPanelMowDirectCest
         $reviewsAndRatings->updateStatus();}
 
 //5.1.1.2. Edit Review View
-
     function T858EditAReview(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoReviewsAndRatings $reviewsAndRatings) {
         $I->loginAdminPanel('testing','Da1mat1an5');
         $reviewsAndRatings->goToPendingReviews();
@@ -501,7 +443,6 @@ class MagentoAdminPanelMowDirectCest
 
 ////5.1.2. All Reviews
 //5.1.2.1. Grid View
-
     function T859TestVariousFilters(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoReviewsAndRatings $reviewsAndRatings) {
         $I->loginAdminPanel('testing','Da1mat1an5');
         $reviewsAndRatings->goToAllReviews();
@@ -516,7 +457,6 @@ class MagentoAdminPanelMowDirectCest
         $I->loginAdminPanel('testing','Da1mat1an5');
         $reviewsAndRatings->goToAllReviews();
         $reviewsAndRatings->editReview('test review');}
-
 // 5.2. Manage Ratings
 
     function T864AddANewRating(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoReviewsAndRatings $reviewsAndRatings) {
@@ -623,8 +563,6 @@ class MagentoAdminPanelMowDirectCest
 
 
 // 6.1. Select Products
-
-
     function T1287TestGridViewFilters(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoSearchAndReplaceCatalog $searchAndReplaceCatalog) {
         $I->loginAdminPanel('testing','Da1mat1an5');
         $searchAndReplaceCatalog->goToSearchAndReplaceSelectInProduct();
@@ -640,7 +578,6 @@ class MagentoAdminPanelMowDirectCest
         $searchAndReplaceCatalog->massAction('simple test product'); }
 
 // 6.2. Search Grid
-
     function T1291TestDeleteLinkInTheGrid(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoSearchAndReplaceCatalog $searchAndReplaceCatalog) {
         $I->loginAdminPanel('testing','Da1mat1an5');
         $searchAndReplaceCatalog->goToSearchAndReplaceSearch();
@@ -677,7 +614,6 @@ class MagentoAdminPanelMowDirectCest
 // 7. Search and Replace CMS
 ////7.1. Pages
 ////7.1.1. Select In Pages
-
     function T1296TestGridViewFilters(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoSearchAndReplaceCms $searchAndReplaceCms, \Page\MagentoManageContent $magentoManageContent) {
         $I->loginAdminPanel('testing','Da1mat1an5');
         $magentoManageContent->goToManagePage();
@@ -690,15 +626,12 @@ class MagentoAdminPanelMowDirectCest
         $searchAndReplaceCms->goToSearchAndReplaceSelectPage();
         $searchAndReplaceCms->massAction('title-test-1'); }
 
-
 //// 7.1.2. Search in Pages
-
     function T1306TestDeleteLinkGridItself(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoSearchAndReplaceCms $searchAndReplaceCms)  {
         $I->loginAdminPanel('testing', 'Da1mat1an5');
         $searchAndReplaceCms->goToSearchAndReplaceSearchInPage();
         //$searchAndReplaceCms->searchFilter('title-test-1');
-        $searchAndReplaceCms->deleteItSelf();
-    }
+        $searchAndReplaceCms->deleteItSelf();}
 
     function T1304TestReplaceFunctionMassActionMenu(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoSearchAndReplaceCms $searchAndReplaceCms) {
         $I->loginAdminPanel('testing','Da1mat1an5');
@@ -707,7 +640,6 @@ class MagentoAdminPanelMowDirectCest
         $searchAndReplaceCms->massAction1('title-test-1');
         $searchAndReplaceCms->undoReplace('title-test-1'); }
 
-*/
 //// 7.1.3. Replace in Pages
     function T1308TestUndoReplaceMassActionMenu(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoSearchAndReplaceCms $searchAndReplaceCms) {
         $I->loginAdminPanel('testing','Da1mat1an5');
@@ -715,9 +647,7 @@ class MagentoAdminPanelMowDirectCest
         $searchAndReplaceCms->searchFilter('title-test-1');
         $searchAndReplaceCms->massAction('title-test-1');
         $searchAndReplaceCms->undoReplace('title-test-1');
-        $searchAndReplaceCms->undoChangeReplace();
-
-    }
+        $searchAndReplaceCms->undoChangeReplace();    }
 
     function T1310TestDeleteMassActionMenu(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoSearchAndReplaceCms $searchAndReplaceCms) {
         $I->loginAdminPanel('testing','Da1mat1an5');
@@ -725,8 +655,7 @@ class MagentoAdminPanelMowDirectCest
         $searchAndReplaceCms->searchFilter('title-test-1');
         $searchAndReplaceCms->massAction('title-test-1');
         $searchAndReplaceCms->undoReplace('title-test-1');
-        $searchAndReplaceCms->deleteChangeReplace();
-    }
+        $searchAndReplaceCms->deleteChangeReplace();    }
 
     function T1312TestUndoReplacementItself(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoSearchAndReplaceCms $searchAndReplaceCms) {
         $I->loginAdminPanel('testing','Da1mat1an5');
@@ -734,19 +663,68 @@ class MagentoAdminPanelMowDirectCest
         $searchAndReplaceCms->searchFilter('title-test-1');
         $searchAndReplaceCms->massAction1('title-test-1');
         $searchAndReplaceCms->undoReplace('title-test-1');
-        $searchAndReplaceCms->undoReplaceItself();
-    }
+        $searchAndReplaceCms->undoReplaceItself();    }
 
 ////7.2. Static Blocks
 ////7.2.1. Select in Static Blocks
 
 
+//BUG     function T1299TestGridViewFilters(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoSearchAndReplaceCms $searchAndReplaceCms) {
+//BUG         $I->loginAdminPanel('testing','Da1mat1an5');
+//BUG         $searchAndReplaceCms->goToSearchAndSelectStaticBlock();
+//BUG         $searchAndReplaceCms->variousView(); }
+
+     function T1302TestSearchActionMassActionMenu(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoSearchAndReplaceCms $searchAndReplaceCms, \Page\MagentoStaticBlocks $magentoStaticBlocks) {
+         $I->loginAdminPanel('testing','Da1mat1an5');
+         $magentoStaticBlocks->goToStaticBlocksPage();
+         $magentoStaticBlocks->createNewStaticBlock('test-block','test-block','test-block');
+         $searchAndReplaceCms->goToSearchAndSelectStaticBlock();
+         $searchAndReplaceCms->searchFilter('test-block');
+         $searchAndReplaceCms->searchActionMassActionMenu('test'); }
+
+////7.2.2. Search in Static Blocks
+    function T1305TestReplaceFunctionMassActionMenu(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoSearchAndReplaceCms $searchAndReplaceCms) {
+        $I->loginAdminPanel('testing','Da1mat1an5');
+        $searchAndReplaceCms->goToSearchAndSearchStaticBlock();
+        $searchAndReplaceCms->undoReplace('test'); }
+
+    function T1307TestDeleteLinkItself(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoSearchAndReplaceCms $searchAndReplaceCms) {
+        $I->loginAdminPanel('testing','Da1mat1an5');
+        $searchAndReplaceCms->goToSearchAndSelectStaticBlock();
+        $searchAndReplaceCms->searchFilter('test-block');
+        $searchAndReplaceCms->searchActionMassActionMenu('test');
+        $searchAndReplaceCms->deleteItSelf(); }
+
+
+    function T1309TestUndoReplaceMassActionMenu(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoSearchAndReplaceCms $searchAndReplaceCms) {
+        $I->loginAdminPanel('testing','Da1mat1an5');
+        $searchAndReplaceCms->goToSearchAndSelectStaticBlock();
+        $searchAndReplaceCms->searchFilter('test-block');
+        $searchAndReplaceCms->searchActionMassActionMenu('test');
+        $searchAndReplaceCms->undoReplace('test');
+        $searchAndReplaceCms->undoChangeReplace(); }
+
+    function T1311TestDeleteMassActionMenu(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoSearchAndReplaceCms $searchAndReplaceCms) {
+        $I->loginAdminPanel('testing','Da1mat1an5');
+        $searchAndReplaceCms->goToSearchAndSelectStaticBlock();
+        $searchAndReplaceCms->searchFilter('test-block');
+        $searchAndReplaceCms->searchActionMassActionMenu('test');
+        $searchAndReplaceCms->undoReplace('test');
+        $searchAndReplaceCms->deleteChangeReplace(); }
+
+    function T1313TestUndoReplacementItself(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoSearchAndReplaceCms $searchAndReplaceCms) {
+        $I->loginAdminPanel('testing','Da1mat1an5');
+        $searchAndReplaceCms->goToSearchAndSelectStaticBlock();
+        $searchAndReplaceCms->searchFilter('test-block');
+        $searchAndReplaceCms->searchActionMassActionMenu('test');
+        $searchAndReplaceCms->undoReplace('test');
+        $searchAndReplaceCms->undoReplaceItself(); }
 
 
 
 
 
-
+/*
 
 
         ////  Delete Test Pages CMS->Manage Content
