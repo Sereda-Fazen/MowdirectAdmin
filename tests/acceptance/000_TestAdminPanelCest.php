@@ -7,6 +7,7 @@ use \Step\Acceptance;
 class TestAdminPanelCest
 {
 
+    /***************************Catalog******************************/
 
     /**
      * @param Acceptance\AdminPanelLoginSteps $I
@@ -41,6 +42,8 @@ class TestAdminPanelCest
         $manageCategories->deleteCategory();
 
     }
+
+    /*************************CMS*****************************/
 
 
     /**
@@ -77,6 +80,10 @@ class TestAdminPanelCest
     function T769RemoveAPageFromTheTree(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageHierarchy $magentoManageHierarchy) {
         $magentoManageHierarchy->deletePageFromTree('test-title-1');
     }
+
+
+    /*****************************Customers***************************/
+
 
     /**
      * @param Acceptance\AdminPanelLoginSteps $I
@@ -194,6 +201,8 @@ class TestAdminPanelCest
     }
 
 
+    /**************************Promotions***************************/
+
     /**
      * @param Acceptance\AdminPanelLoginSteps $I
      * @param \Page\MagentoPromotions $manageCategories
@@ -214,6 +223,31 @@ class TestAdminPanelCest
     function T1108DeleteRule (\Page\MagentoPromotions $manageCategories)
     {
         $manageCategories->removeRule();
+    }
+
+    /**
+     * @param Acceptance\AdminPanelLoginSteps $I
+     * @param \Page\MagentoPromotions $magentoManageAttributes
+     * Promotions -> Shopping Basket Price Rules
+     */
+
+    function T1110AddANewShoppingRule (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoPromotions $magentoManageAttributes)
+    {
+        $I->loginAdminPanel('testing', 'Da1mat1an5');
+        $magentoManageAttributes->goMagentoPromotions();
+        $magentoManageAttributes->addNewShoppingRule();
+    }
+    function T1109TestFiltersShoppingRule (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoPromotions $magentoManageAttributes)
+    {
+        $magentoManageAttributes->filters();
+    }
+    function T1111EditShoppingRule (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoPromotions $magentoManageAttributes)
+    {
+        $magentoManageAttributes->editShoppingRule();
+    }
+    function T1112DeleteShoppingRule (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoPromotions $magentoManageAttributes)
+    {
+        $magentoManageAttributes->deleteShoppingRule();
     }
 }
 

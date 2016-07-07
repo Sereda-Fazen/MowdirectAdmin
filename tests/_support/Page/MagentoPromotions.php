@@ -112,6 +112,11 @@ class MagentoPromotions
 
     public static $shoppingBasketPriceRules = '//*[@class="nav-bar"]//li//ul//a/span[text()="Shopping Basket Price Rules"]';
     public static $shoppingH3 = '//*[@class="content-header"]//h3[text()="Shopping Basket Price Rules"]';
+    public static $filterName = '//*[@class="filter"]//div/input[@name="name"]';
+    public static $showShoppingRule = '//div[@class="grid"]//tbody//td[contains(text(),"Test Shopping Rule")]';
+    public static $searchFilter = '//*[@class="filter-actions a-right"]//button//span[text()="Search"]';
+    public static $foundRule = '//div[@class="grid"]//tbody//td[contains(text(),"Test Shopping")]';
+    public static $showEditShoppingRule = '//div[@class="grid"]//tbody//td[contains(text(),"Test Edit Shopping Rule")]';
 
 
     public function addNewShoppingRule(){
@@ -133,8 +138,38 @@ class MagentoPromotions
         $I->click(static::$save);
         $I->waitForElement(static::$assertSuccessMsg);
         $I->see('The rule has been saved.',static::$assertSuccessMsg);
-        $I->waitForElement(static::$showRule);
+    }
 
+    public function filters(){
+        $I = $this->tester;
+        $I->waitForElement(self::$filterName);
+        $I->fillField(self::$filterName, 'Test');
+        $I->click(self::$searchFilter);
+        $I->waitForElement(self::$foundRule);
+    }
+
+    public function editShoppingRule(){
+        $I = $this->tester;
+        $I->click(self::$foundRule);
+        $I->waitForElement(static::$name);
+        $I->fillField(static::$name, 'Test Edit Shopping Rule');
+        $I->click(static::$save);
+        $I->waitForElement(static::$assertSuccessMsg);
+        $I->see('The rule has been saved.',static::$assertSuccessMsg);
+
+        $I->waitForElement(self::$showEditShoppingRule);
+    }
+
+    public function deleteShoppingRule()
+    {
+        $I = $this->tester;
+        $I->click(self::$showEditShoppingRule);
+        $I->waitForElement(static::$deleteRule);
+        $I->click(static::$deleteRule);
+        $I->acceptPopup();
+        $I->waitForElement(static::$assertSuccessMsg);
+        $I->see('The rule has been deleted.', static::$assertSuccessMsg);
+        $I->waitForElementNotVisible(static::$showEditRule);
 
     }
 }
