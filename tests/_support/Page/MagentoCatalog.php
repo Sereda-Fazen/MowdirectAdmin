@@ -141,6 +141,68 @@ class MagentoCatalog
         $I->see('URL Redirect has been deleted.', self::$assertSuccessMsg);
     }
 
+    /**
+     * Google siteMap
+     */
+
+
+
+    public static $manageGoogleMap = '//*[@class="nav-bar"]//li//ul//a/span[text()="Google Sitemap"]';
+    public static $mapH3 = '//*[@class="content-header"]//h3[text()="Google Sitemap"]';
+    public static $addNewMap = '//*[@class="content-header"]//td/button//span[text()="Add Sitemap"]';
+    public static $errorFileName = '//*[@name="sitemap_filename"]/../div[contains(text(),"This")]';
+    public static $errorPath = '//*[@name="sitemap_path"]/../div[contains(text(),"This")]';
+    public static $enterFileName = '//*[@name="sitemap_filename"]';
+    public static $enterPath = '//*[@name="sitemap_path"]';
+    public static $selectStore = '//select[@name="store_id"]';
+    public static $errorMsg = '//*[@class="messages"]';
+    public static $addedMap = '//*[@class="grid"]//tbody//tr/td[contains(text(),"sitemap.xml")]/../td[contains(text(),"/sitemap")]/../td[contains(text(),"sitemap/sitemap.xml")]';
+    public static $addedEditMap = '//*[@class="grid"]//tbody//tr/td[contains(text(),"sitemap.xml")]/../td[contains(text(),"/")]/../td[contains(text(),"/sitemap.xml")]';
+
+    public function addMap(){
+        self::goMagentoCatalog();
+        $I = $this->tester;
+        $I->click(self::$manageGoogleMap);
+        $I->waitForElement(self::$mapH3);
+        $I->click(self::$addNewMap);
+        $I->waitForElement(static::$save);
+        $I->click(static::$save);
+        $I->seeElement(self::$errorFileName);
+        $I->seeElement(self::$errorPath);
+        $I->fillField(self::$enterFileName, 'Test');
+        $I->fillField(self::$enterPath, 'test/');
+        $I->selectOption(self::$selectStore, 'Mowdirect_Fourteen_Storeview');
+        $I->click(static::$save);
+        $I->waitForElement(self::$errorMsg);
+        $I->see('Path "test/Test" is not available and cannot be used.', self::$errorMsg);
+        $I->fillField(self::$enterFileName, 'sitemap.xml');
+        $I->click(static::$save);
+        $I->waitForElement(self::$errorMsg);
+        $I->see('Please create the specified folder "test/" before saving the sitemap.', self::$errorMsg);
+        $I->fillField(self::$enterPath, 'sitemap/');
+        $I->click(static::$save);
+        $I->waitForElement(self::$assertSuccessMsg);
+        $I->see('The sitemap has been saved.', self::$assertSuccessMsg);
+        $I->seeElement(self::$addedMap);
+    }
+
+    public function editMap(){
+        $I = $this->tester;
+        $I->click(self::$addedMap);
+        $I->fillField(self::$enterPath, '/');
+        $I->click(static::$save);
+        $I->waitForElement(self::$assertSuccessMsg);
+        $I->see('The sitemap has been saved.', self::$assertSuccessMsg);
+        $I->seeElement(self::$addedEditMap);
+    }
+    public function deleteMap(){
+        $I = $this->tester;
+        $I->click(self::$addedEditMap);
+        $I->click(static::$deleteUrl);
+        $I->acceptPopup();
+        $I->see('The sitemap has been deleted.', self::$assertSuccessMsg);
+        
+    }
 
 
 

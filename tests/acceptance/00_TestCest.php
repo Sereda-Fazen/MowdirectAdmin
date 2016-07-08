@@ -7,30 +7,25 @@ use \Step\Acceptance;
 class TestCest
 {
 
-    function T886TestFilters (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoCustomer $manageCategories)
+    /**
+     * @param Acceptance\AdminPanelLoginSteps $I
+     * @param \Page\MagentoCatalog $magentoCatalog
+     * Catalog -> Google Map
+     */
+
+    function T1189AddNewMap (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoCatalog $magentoCatalog)
     {
         $I->loginAdminPanel('testing', 'Da1mat1an5');
-        $manageCategories->goMagentoCustomer();
-        $manageCategories->addNewCustomer();
-        $manageCategories->filtersName();
-        $manageCategories->filtersEmail();
-        $manageCategories->filtersGroup();
+        $magentoCatalog->goMagentoCatalog();
+        $magentoCatalog->addMap();
     }
-    function T888SubscribeViaActions (\Page\MagentoCustomer $manageCategories)
+    function T1190EditMap (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoCatalog $magentoCatalog)
     {
-        $manageCategories->checkSubscribe('Subscribe to Newsletter');
+        $magentoCatalog->editMap();
     }
-    function T889UnsubscribeViaActions (\Page\MagentoCustomer $manageCategories)
+    function T1191DeleteMap (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoCatalog $magentoCatalog)
     {
-        $manageCategories->checkSubscribe('Unsubscribe from Newsletter');
-    }
-    function T890AssignViaActions (\Page\MagentoCustomer $manageCategories)
-    {
-        $manageCategories->checkGroup('Assign a Customer Group', 'General');
-    }
-    function T887DeleteViaActions (\Page\MagentoCustomer $manageCategories)
-    {
-        $manageCategories->checkSubscribe('Delete');
+        $magentoCatalog->deleteMap();
     }
 
    
