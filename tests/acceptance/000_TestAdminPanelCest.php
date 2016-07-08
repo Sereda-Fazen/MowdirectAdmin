@@ -201,6 +201,35 @@ class TestAdminPanelCest
     }
 
 
+    /**
+     * @param Acceptance\AdminPanelLoginSteps $I
+     * @param \Page\MagentoManageAttributes $magentoManageAttributes
+     * Customers -> Attribute -> Manage Customer Address Attributes
+     */
+
+    function T1195AddNewAttributeAddress (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageAttributes $magentoManageAttributes)
+    {
+        $I->loginAdminPanel('testing', 'Da1mat1an5');
+        $magentoManageAttributes->addAddressAttribute();
+    }
+
+    function T1193TestFilters (\Page\MagentoManageAttributes $magentoManageAttributes)
+    {
+        $magentoManageAttributes->filters();
+    }
+
+    function T1196EditAttributeAddress (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageAttributes $magentoManageAttributes)
+    {
+        $magentoManageAttributes->editAttributeAddress();
+    }
+
+    function T1197DeteleAttributeAddress (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageAttributes $magentoManageAttributes)
+    {
+        $magentoManageAttributes->deleteAttributeAddress();
+
+    }
+
+
     /**************************Promotions***************************/
 
     /**
@@ -304,5 +333,8 @@ class TestAdminPanelCest
     {
         $magentoCatalog->deleteMap();
     }
+
+
+
 }
 

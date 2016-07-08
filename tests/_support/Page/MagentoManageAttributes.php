@@ -32,9 +32,9 @@ class MagentoManageAttributes
 
     public function goToManageAttributes() {
         $I = $this->tester;
-        $I ->moveMouseOver(self::$catalogDown);
+        $I->moveMouseOver(self::$catalogDown);
         $I->waitForElement(self::$attributesDown);
-        $I ->moveMouseOver(self::$attributesDown);
+        $I->moveMouseOver(self::$attributesDown);
         $I->waitForElement(self::$manageAttributes);
         $I->click(self::$manageAttributes);
         $I->waitForElementVisible(self::$assertDataPage);
@@ -262,6 +262,112 @@ class MagentoManageAttributes
         $I->wait(2);
     //    $I->waitForElementNotVisible('Google Shopping');
     }
+
+
+    /**
+     * @var string
+     * Manage Customer Address Attributes
+     */
+
+    public static $customer = '//*[@class="nav-bar"]//li//span[text()="Customers"]';
+    public static $attribute = '//*[@class="nav-bar"]//li//span[text()="Customers"]/../../ul//span[text()="Attributes"]';
+    public static $attributesAddress = '//*[@class="nav-bar"]//li//span[text()="Customers"]/../../ul//span[text()="Attributes"]/../../ul/li//span[text()="Manage Customer Address Attributes"]';
+    public static $attributeH3 = '//*[@class="content-header"]//h3[text()="Manage Customer Address Attributes"]';
+    public static $addNewAttribute = '//*[@class="content-header"]//td/button//span[text()="Add New Attribute"]';
+
+    public static $emptyCode = '//*[@name="attribute_code"]/../div[contains(text(),"This")]';
+    public static $errorLetters = '//*[@name="attribute_code"]/../div[contains(text(),"Please")]';
+    public static $code = '//*[@name="attribute_code"]';
+    public static $errorSortOrder = '//*[@name="sort_order"]/../div[contains(text(),"This")]';
+    public static $sortOrder = '//*[@name="sort_order"]';
+    public static $errorSortLetters = '//*[@name="sort_order"]/../div[contains(text(),"Please")]';
+
+    public static $propertyError = '//*[@class="columns "]//a/span/span[contains(@title,"This")]';
+    public static $manageError = '//*[@class="columns "]//li//span[contains(text(),"Manage")]/../..//span[contains(@title, "This")]';
+    public static $failed = '//*[@name="frontend_label[0]"]/../div[contains(text(),"Failed")]';
+    public static $admin = '//*[@name="frontend_label[0]"]';
+
+
+
+    public static $save = '//*[@class="content-header"]//button//span[text()="Save Attribute"]';
+    public static $loading = '//*[@id="loading_mask_loader"]';
+    public static $showAttribute = '//div[@class="grid"]//tbody//td[contains(text(),"test_attribute")]/../td[contains(text(),"AdminTest")]/../td[contains(text(),"15")]';
+    //filter
+
+    public static $searchAttribute = '//*[@class="filter"]/.//input[@name="attribute_code"]';
+    public static $search = '//*[@class="filter-actions a-right"]//button//span[text()="Search"]';
+    // edit
+
+    public static $showEditAttribute = '//div[@class="grid"]//tbody//td[contains(text(),"test_attribute")]/../td[contains(text(),"AdminTest")]/../td[contains(text(),"25")]';
+    //remove
+    public static $delete = '//div[@class="content-header"]//button//span[text()="Delete Attribute"]';
+
+
+    public function addAddressAttribute(){
+        $I = $this->tester;
+
+        $I->moveMouseOver(self::$customer);
+        $I->waitForElement(self::$attribute);
+        $I->moveMouseOver(self::$attribute);
+        $I->waitForElement(self::$attributesAddress);
+        $I->click(self::$attributesAddress);
+        $I->waitForElement(self::$attributeH3);
+        $I->click(self::$addNewAttribute);
+        $I->waitForElement(self::$save);
+        $I->click(self::$save);
+        $I->seeElement(self::$emptyCode);
+        $I->seeElement(self::$errorSortOrder);
+        $I->seeElement(self::$propertyError);
+        $I->seeElement(self::$manageError);
+        $I->fillField(self::$code, '10');
+        $I->click(self::$save);
+        $I->seeElement(self::$errorLetters);
+        $I->fillField(self::$sortOrder, 'test');
+        $I->click(self::$save);
+        $I->seeElement(self::$errorSortLetters);
+
+        $I->fillField(self::$code, 'test_attribute');
+        $I->fillField(self::$sortOrder, '15');
+        $I->click(self::$save);
+
+        $I->waitForElement(self::$failed);
+        $I->seeElement(self::$failed);
+        $I->fillField(self::$admin,'AdminTest');
+        $I->click(self::$save);
+        $I->waitForElementNotVisible(self::$loading,30);
+        $I->waitForElement(self::$assertSuccessMsg);
+        $I->see('The customer address attribute has been saved.', self::$assertSuccessMsg);
+        $I->waitForElement(self::$showAttribute);
+    }
+    public function filters(){
+        $I = $this->tester;
+        $I->fillField(self::$searchAttribute, 'test_attribute');
+        $I->click(self::$search);
+        $I->waitForElement(self::$showAttribute);
+    }
+    public function editAttributeAddress(){
+        $I = $this->tester;
+        $I->click(self::$showAttribute);
+        $I->waitForElement(self::$sortOrder);
+        $I->fillField(self::$sortOrder, '25');
+        $I->click(self::$save);
+        $I->waitForElementNotVisible(self::$loading,30);
+        $I->waitForElement(self::$assertSuccessMsg);
+        $I->see('The customer address attribute has been saved.', self::$assertSuccessMsg);
+        $I->waitForElement(self::$showEditAttribute);
+    }
+    public function deleteAttributeAddress(){
+        $I = $this->tester;
+        $I->click(self::$showEditAttribute);
+        $I->waitForElement(self::$delete);
+        $I->click(self::$delete);
+        $I->acceptPopup();
+        $I->waitForElement(self::$assertSuccessMsg);
+        $I->see('The customer address attribute has been deleted.', self::$assertSuccessMsg);
+        $I->waitForElementNotVisible(self::$showEditAttribute);
+    }
+
+
 
 
 

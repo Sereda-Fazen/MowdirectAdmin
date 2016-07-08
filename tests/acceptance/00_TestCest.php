@@ -7,26 +7,36 @@ use \Step\Acceptance;
 class TestCest
 {
 
+
     /**
      * @param Acceptance\AdminPanelLoginSteps $I
-     * @param \Page\MagentoCatalog $magentoCatalog
-     * Catalog -> Google Map
+     * @param \Page\MagentoManageAttributes $magentoManageAttributes
+     * Customers -> Attribute -> Manage Customer Attributes
      */
 
-    function T1189AddNewMap (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoCatalog $magentoCatalog)
+    function T1195AddNewAttributeAddress (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageAttributes $magentoManageAttributes)
     {
         $I->loginAdminPanel('testing', 'Da1mat1an5');
-        $magentoCatalog->goMagentoCatalog();
-        $magentoCatalog->addMap();
+        $magentoManageAttributes->addAddressAttribute();
     }
-    function T1190EditMap (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoCatalog $magentoCatalog)
+
+    function T1193TestFilters (\Page\MagentoManageAttributes $magentoManageAttributes)
     {
-        $magentoCatalog->editMap();
+        $magentoManageAttributes->filters();
     }
-    function T1191DeleteMap (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoCatalog $magentoCatalog)
+
+    function T1196EditAttributeAddress (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageAttributes $magentoManageAttributes)
     {
-        $magentoCatalog->deleteMap();
+        $magentoManageAttributes->editAttributeAddress();
     }
+
+    function T1197DeteleAttributeAddress (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageAttributes $magentoManageAttributes)
+    {
+        $magentoManageAttributes->deleteAttributeAddress();
+
+    }
+
+
 
    
 }
