@@ -7,19 +7,30 @@ use \Step\Acceptance;
 class TestCest
 {
 
-    /**
-     * @param Acceptance\AdminPanelLoginSteps $I
-     * @param \Page\MagentoPromotions $magentoManageAttributes
-     * Promotions -> Shopping Basket Price Rules
-     */
-
-    function T1110AddANewShoppingRule (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoCatalog $magentoCatalog)
+    function T886TestFilters (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoCustomer $manageCategories)
     {
         $I->loginAdminPanel('testing', 'Da1mat1an5');
-        $magentoCatalog->goMagentoCatalog();
-        $magentoCatalog->addNewURL();
-        $magentoCatalog->filters();
-
+        $manageCategories->goMagentoCustomer();
+        $manageCategories->addNewCustomer();
+        $manageCategories->filtersName();
+        $manageCategories->filtersEmail();
+        $manageCategories->filtersGroup();
+    }
+    function T888SubscribeViaActions (\Page\MagentoCustomer $manageCategories)
+    {
+        $manageCategories->checkSubscribe('Subscribe to Newsletter');
+    }
+    function T889UnsubscribeViaActions (\Page\MagentoCustomer $manageCategories)
+    {
+        $manageCategories->checkSubscribe('Unsubscribe from Newsletter');
+    }
+    function T890AssignViaActions (\Page\MagentoCustomer $manageCategories)
+    {
+        $manageCategories->checkGroup('Assign a Customer Group', 'General');
+    }
+    function T887DeleteViaActions (\Page\MagentoCustomer $manageCategories)
+    {
+        $manageCategories->checkSubscribe('Delete');
     }
 
    

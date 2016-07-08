@@ -66,7 +66,6 @@ class MagentoManageHierarchy
 
     public function goToManageHierarchyPage() {
         $I = $this->tester;
-        $I->amOnPage(self::$URL);
         $I ->moveMouseOver(self::$cmsDropDown);
         $I->waitForElement(self::$pagesDropDown);
         $I->moveMouseOver(self::$pagesDropDown);

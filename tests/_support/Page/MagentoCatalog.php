@@ -37,7 +37,18 @@ class MagentoCatalog
     public static $searchURL = '//*[@class="filter-actions a-right"]//button//span[text()="Search"]';
     public static $foundUrl = '//*[@class="grid"]//tbody//tr/td[contains(text(),"ego/test.html")]';
 
+    // check url
 
+    public static $urlFront = 'http://testupgrade.ee12test.mowdirect.co.uk/ego/test.html';
+    public static $productView = '//div[@class="product-view"]';
+    //edit
+
+    public static $foundEditUrl = '//*[@class="grid"]//tbody//tr/td[contains(text(),"ego/test/test.html")]';
+    public static $urlUpdateFront = 'http://testupgrade.ee12test.mowdirect.co.uk/ego/test/test.html';
+
+    //delete
+
+    public static $deleteUrl = '//div[@class="content-header"]//button//span[text()="Delete"]';
 
 
     protected $tester;
@@ -85,6 +96,53 @@ class MagentoCatalog
         $I->waitForElement(self::$foundUrl);
 
     }
+
+    public function checkUrl(){
+        $I = $this->tester;
+        $I->amOnUrl(self::$urlFront);
+        $I->waitForElement(self::$productView);
+        $I->amOnUrl('http://testing:Da1mat1an5@testupgrade.ee12test.mowdirect.co.uk/admin');
+        self::goMagentoCatalog();
+        $I->waitForElement(self::$manageCatalog);
+        $I->click(self::$manageCatalog);
+        $I->waitForElement(self::$h3);
+    }
+
+    public function editUrl(){
+        $I = $this->tester;
+        $I->click(self::$foundUrl);
+        $I->fillField(self::$enterRequirePath,'ego/test/test.html');
+        $I->click(self::$save);
+        $I->waitForElement(self::$assertSuccessMsg);
+        $I->see('Redirect item has been saved.', self::$assertSuccessMsg);
+
+        $I->fillField(self::$enterUrl, 'ego/test/test.html');
+        $I->click(self::$searchURL);
+        $I->waitForElement(self::$foundEditUrl);
+    }
+    public function checkUpdateUrl(){
+        $I = $this->tester;
+        $I->amOnUrl(self::$urlUpdateFront);
+        $I->waitForElement(self::$productView);
+        $I->amOnUrl('http://testing:Da1mat1an5@testupgrade.ee12test.mowdirect.co.uk/admin');
+        self::goMagentoCatalog();
+        $I->waitForElement(self::$manageCatalog);
+        $I->click(self::$manageCatalog);
+        $I->waitForElement(self::$h3);
+    }
+    public function deleteUrl()
+    {
+        $I = $this->tester;
+        $I->click(self::$foundEditUrl);
+        $I->waitForElement(self::$deleteUrl);
+        $I->click(self::$deleteUrl);
+        $I->acceptPopup();
+        $I->waitForElement(self::$assertSuccessMsg);
+        $I->see('URL Redirect has been deleted.', self::$assertSuccessMsg);
+    }
+
+
+
 
 
 

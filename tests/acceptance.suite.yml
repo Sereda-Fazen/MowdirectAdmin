@@ -7,7 +7,7 @@ modules:
 
     config:
         WebDriver:
-            url: 'http://testing:Da1mat1an5@testupgrade.ee12test.mowdirect.co.uk/'
+            url: 'http://testing:Da1mat1an5@testupgrade.ee12test.mowdirect.co.uk/admin'
 
             restart: false
             browser: chrome
