@@ -8,28 +8,24 @@ class TestCest
 {
 
 
-    function T1179AddANewUrl (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoCatalog $magentoCatalog)
+    function T1204AddANewUser (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoSystem $magentoSystem)
     {
         $I->loginAdminPanel('testing', 'Da1mat1an5');
-        $magentoCatalog->goMagentoCatalog();
-        $magentoCatalog->addNewURL();
+        $magentoSystem->goMagentoPermissions();
+        $magentoSystem->addNewUser();
     }
-    function T1178TestFilters (\Page\MagentoCatalog $magentoCatalog)
+    function T1201TestFiltersUser (\Page\MagentoSystem $magentoSystem)
     {
-        $magentoCatalog->filters();
-        $magentoCatalog->checkUrl();
+        $magentoSystem->filterUser();
     }
-    function T1180EditUrl (\Page\MagentoCatalog $magentoCatalog)
+    function T1205EditUser (\Page\MagentoSystem $magentoSystem)
     {
-        $magentoCatalog->editUrl();
-        $magentoCatalog->checkUpdateUrl();
+        $magentoSystem->editUser();
     }
-    function T1181DeleteUrl (\Page\MagentoCatalog $magentoCatalog)
+    function T1206DeleteUser (\Page\MagentoSystem $magentoSystem)
     {
-        $magentoCatalog->deleteUrl();
-
+        $magentoSystem->deleteUser();
     }
-
 
    
 }

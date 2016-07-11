@@ -333,7 +333,61 @@ class TestAdminPanelCest
     {
         $magentoCatalog->deleteMap();
     }
+    
+    /*********************************System***********************************/
 
+
+    /**
+     * @param Acceptance\AdminPanelLoginSteps $I
+     * @param \Page\MagentoSystem $magentoSystem
+     * System -> Permissions -> User
+     */
+
+    function T1204AddANewUser (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoSystem $magentoSystem)
+    {
+        $I->loginAdminPanel('testing', 'Da1mat1an5');
+        $magentoSystem->goMagentoPermissions();
+        $magentoSystem->addNewUser();
+    }
+    function T1201TestFiltersUser (\Page\MagentoSystem $magentoSystem)
+    {
+        $magentoSystem->filterUser();
+    }
+    function T1205EditUser (\Page\MagentoSystem $magentoSystem)
+    {
+        $magentoSystem->editUser();
+    }
+    function T1206DeleteUser (\Page\MagentoSystem $magentoSystem)
+    {
+        $magentoSystem->deleteUser();
+    }
+
+    /**
+     * @param Acceptance\AdminPanelLoginSteps $I
+     * @param \Page\MagentoSystem $magentoSystem
+     * System -> Permissions -> Role
+     */
+
+
+
+    function T1207AddANewRole (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoSystem $magentoSystem)
+    {
+        $I->loginAdminPanel('testing', 'Da1mat1an5');
+        $magentoSystem->goMagentoPermissions();
+        $magentoSystem->addNewRole();
+    }
+    function T1202TestFiltersRole (\Page\MagentoSystem $magentoSystem)
+    {
+        $magentoSystem->filterRole();
+    }
+    function T1208EditRole (\Page\MagentoSystem $magentoSystem)
+    {
+        $magentoSystem->editRole();
+    }
+    function T1209DeleteRole (\Page\MagentoSystem $magentoSystem)
+    {
+        $magentoSystem->deleteRole();
+    }
 
 
 }

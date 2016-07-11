@@ -101,7 +101,7 @@ class MagentoCatalog
         $I = $this->tester;
         $I->amOnPage(self::$urlFront);
         $I->waitForElement(self::$productView);
-        $I->amOnUrl('http://testing:Da1mat1an5@testupgrade.ee12test.mowdirect.co.uk/admin');
+        $I->amOnPage('/admin');
         self::goMagentoCatalog();
         $I->waitForElement(self::$manageCatalog);
         $I->click(self::$manageCatalog);
@@ -124,7 +124,7 @@ class MagentoCatalog
         $I = $this->tester;
         $I->amOnPage(self::$urlUpdateFront);
         $I->waitForElement(self::$productView);
-        $I->amOnUrl('http://testing:Da1mat1an5@testupgrade.ee12test.mowdirect.co.uk/admin');
+        $I->amOnPage('/admin');
         self::goMagentoCatalog();
         $I->waitForElement(self::$manageCatalog);
         $I->click(self::$manageCatalog);
