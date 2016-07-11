@@ -39,12 +39,12 @@ class MagentoCatalog
 
     // check url
 
-    public static $urlFront = 'http://testupgrade.ee12test.mowdirect.co.uk/ego/test.html';
+    public static $urlFront = '/ego/test.html';
     public static $productView = '//div[@class="product-view"]';
     //edit
 
     public static $foundEditUrl = '//*[@class="grid"]//tbody//tr/td[contains(text(),"ego/test/test.html")]';
-    public static $urlUpdateFront = 'http://testupgrade.ee12test.mowdirect.co.uk/ego/test/test.html';
+    public static $urlUpdateFront = '/ego/test/test.html';
 
     //delete
 
@@ -99,7 +99,7 @@ class MagentoCatalog
 
     public function checkUrl(){
         $I = $this->tester;
-        $I->amOnUrl(self::$urlFront);
+        $I->amOnPage(self::$urlFront);
         $I->waitForElement(self::$productView);
         $I->amOnUrl('http://testing:Da1mat1an5@testupgrade.ee12test.mowdirect.co.uk/admin');
         self::goMagentoCatalog();
@@ -122,7 +122,7 @@ class MagentoCatalog
     }
     public function checkUpdateUrl(){
         $I = $this->tester;
-        $I->amOnUrl(self::$urlUpdateFront);
+        $I->amOnPage(self::$urlUpdateFront);
         $I->waitForElement(self::$productView);
         $I->amOnUrl('http://testing:Da1mat1an5@testupgrade.ee12test.mowdirect.co.uk/admin');
         self::goMagentoCatalog();

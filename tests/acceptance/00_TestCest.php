@@ -8,34 +8,27 @@ class TestCest
 {
 
 
-    function T765CreateANewNode(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageHierarchy $magentoManageHierarchy) {
-        $I->loginAdminPanel('testing','Da1mat1an5');
-        $magentoManageHierarchy->goToManageHierarchyPage();
-        $magentoManageHierarchy->createNode('test-title-node','test-url-node');
+    function T1179AddANewUrl (Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoCatalog $magentoCatalog)
+    {
+        $I->loginAdminPanel('testing', 'Da1mat1an5');
+        $magentoCatalog->goMagentoCatalog();
+        $magentoCatalog->addNewURL();
     }
-
-    function T766MoveAnExistingNode(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageHierarchy $magentoManageHierarchy) {
-
-        $magentoManageHierarchy->moveNode();
+    function T1178TestFilters (\Page\MagentoCatalog $magentoCatalog)
+    {
+        $magentoCatalog->filters();
+        $magentoCatalog->checkUrl();
     }
-
-    function T774EditANode(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageHierarchy $magentoManageHierarchy) {
-
-        $magentoManageHierarchy->editNode('test-title-node');
+    function T1180EditUrl (\Page\MagentoCatalog $magentoCatalog)
+    {
+        $magentoCatalog->editUrl();
+        $magentoCatalog->checkUpdateUrl();
     }
+    function T1181DeleteUrl (\Page\MagentoCatalog $magentoCatalog)
+    {
+        $magentoCatalog->deleteUrl();
 
-    function T767DeleteANode(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageHierarchy $magentoManageHierarchy) {
-        $magentoManageHierarchy->deleteNodeFromTree('test-title-node');
     }
-
-    function T768AddAPageToTheTree(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageHierarchy $magentoManageHierarchy) {
-        $magentoManageHierarchy->addPageToTree1('test-title-1');
-    }
-
-    function T769RemoveAPageFromTheTree(Step\Acceptance\AdminPanelLoginSteps $I, \Page\MagentoManageHierarchy $magentoManageHierarchy) {
-        $magentoManageHierarchy->deletePageFromTree('test-title-1');
-    }
-
 
 
    
