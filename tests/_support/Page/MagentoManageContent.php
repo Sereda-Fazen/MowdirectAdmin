@@ -160,14 +160,14 @@ class MagentoManageContent
         }
 
 
-    public static $URL1 = 'http://testing:Da1mat1an5@testupgrade.ee12test.mowdirect.co.uk/test-url-1';
-    public static $URL2 = 'http://testing:Da1mat1an5@testupgrade.ee12test.mowdirect.co.uk/test-non-url-1';
+    public static $URL1 = '/test-url-1';
+    public static $URL2 = '/test-non-url-1';
     public static $assertTitle= './/*[@class="page-title"]/h1';
     public static $assertText = './/*[@class="std"]';
 
     public function checkControlledVersionPage(){
         $I = $this->tester;
-        $I->amOnUrl(self::$URL1);
+        $I->amOnPage(self::$URL1);
         $I->waitForElement(self::$assertTitle);
         $I->waitForElement(self::$assertText);
         $I->see('Test Heading',self::$assertTitle);
@@ -176,7 +176,7 @@ class MagentoManageContent
 
     public function checkNonControlledVersionPage(){
         $I = $this->tester;
-        $I->amOnUrl(self::$URL2);
+        $I->amOnPage(self::$URL2);
         $I->waitForElement(self::$assertTitle);
         $I->waitForElement(self::$assertText);
         $I->see('Test Heading non-version',self::$assertTitle);

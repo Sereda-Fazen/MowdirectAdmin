@@ -15,7 +15,7 @@ class AdminPanelLoginSteps extends \AcceptanceTester
 
 {
     
-    public static $URL = '/';
+    public static $URL = '/admin';
     public static $userNameField = '//*[@id="username"]';
     public static $passwordField = '//*[@id="login"]';
     public static $loginButton = '//*[@class="form-buttons"]/input';
