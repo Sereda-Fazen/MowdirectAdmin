@@ -176,7 +176,7 @@ class MagentoManageContent
 
     public function checkNonControlledVersionPage(){
         $I = $this->tester;
-        $I->amOnPage(self::$URL2);
+        $I->amOnUrl(self::$URL2);
         $I->waitForElement(self::$assertTitle);
         $I->waitForElement(self::$assertText);
         $I->see('Test Heading non-version',self::$assertTitle);
