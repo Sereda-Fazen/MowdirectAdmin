@@ -1,10 +1,7 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: obana
- * Date: 08.06.16
- * Time: 15:56
+ * @group adminPanel
  */
 class MagentoAdminPanelMowDirectCest
 {
